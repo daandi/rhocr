@@ -1,14 +1,15 @@
+#coding: utf-8
 require_relative "ocrx_word"
 
 class HOCR
-    attr_reader :lines, :hocr
+    attr_reader :lines,:words,:hocr
     
     def initialize(filename)
         hocr_contents = File.open(filename,"r") { |f| f.read }
         @lines =  hocr_lines( hocr_contents).select {|line| line.length > 0}
     end
     
-    def  hocr_lines( hocr_contents)
+    def hocr_lines( hocr_contents)
         hocr_array = []
         for line in  hocr_contents.split(/<span class="ocr_line"/) do
             line_array = []
@@ -22,8 +23,12 @@ class HOCR
          hocr_array
     end
     
+    def words
+        @words ||= @lines.flatten
+    end
+    
     def enclosed_words(box)
-        @lines.collect {|word|  }
+        words.collect {|word| box.encloses(word) }
     end
     
     def encloses?()

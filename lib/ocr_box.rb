@@ -1,3 +1,4 @@
+#coding: utf-8
 module OCRBox
     
     def initialize(x1, y1 , x2, y2)
@@ -15,7 +16,7 @@ module OCRBox
     end
     
     def to_s
-        "(#{@x1},#{@y1}) / (#{@x2},#{@y2})"
+        "tl->(x:#{@x1} y:#{@y1})/br->:(x:#{@x2} y:#{@y2})"
     end
     
     def to_css_style
