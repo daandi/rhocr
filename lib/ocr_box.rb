@@ -1,4 +1,5 @@
 #coding: utf-8
+
 class OCRBox
     
     attr_reader :x1, :y1, :x2, :y2
@@ -32,6 +33,10 @@ class OCRBox
         width   = @x2 - @x1
         
         "position:absolute; top:#{top}px; left:#{left}px; height:#{height}px; width:#{width}px;"
+    end
+    
+    def to_json
+        
     end
     
 end

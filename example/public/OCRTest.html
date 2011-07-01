@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<!--
+
+  Created using http://jsbin.com/
+  Source can be edited via http://jsbin.com/azare/edit
+
+-->
+<head>
+  <meta charset="utf-8" />
+  <title>OCRTest</title>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="OCRTest.css" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+  <script language="javascript" type="text/javascript" src="OCRTest_marker.js"></script>
+</head>
+<body>
+<header>
+	<h1>Mark words test</h1>
+</header>
+
+
+
+<div id="ocr_image">
+</div>
+
+<div id="marked_words">
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	/*Initialisierung der Position für JS*/
+	ocr_image_left = $("#ocr_image").offset().left;
+	ocr_image_top = $("#ocr_image").offset().top;
+	
+	
+	$("#ocr_image").mousedown( function(e) { 
+		startX = e.pageX - ocr_image_left;
+		startY = e.pageY - ocr_image_top;
+	});
+	
+	
+	$("#ocr_image").mouseup( function(e) { 
+		endX = e.pageX - ocr_image_left;
+		endY = e.pageY - ocr_image_top;
+		draw_rectangle();
+	});
+	/*Initialisierung abgeschlossen*/
+})
+
+</script>
+</body>
+</html>

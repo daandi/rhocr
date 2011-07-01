@@ -11,8 +11,6 @@ describe OCRPage do
   describe '' do
       it '' do
           p @ocr_page.enclosed_words( OCRBox.new(500,1703,1200,1800) )
-          
-          
       end
   end
   
