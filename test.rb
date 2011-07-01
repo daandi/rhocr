@@ -1,9 +1,8 @@
 # coding: utf-8
-require_relative "lib/hocr.rb"
+require_relative "lib/ocr_page.rb"
 
-hocr = HOCR.new("data/Seite_Tagebuch_H_C_Lang_08.html")
+ocr = OCRPage.new("data/Seite_Tagebuch_H_C_Lang_08.html")
 
-p hocr.lines[1]
-p hocr.words
+p ocr.lines[1]
+p ocr.words
 
-p hocr.enclosed_words(OCRBox.new(200,100,600,50))

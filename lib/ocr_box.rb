@@ -1,5 +1,7 @@
 #coding: utf-8
-module OCRBox
+class OCRBox
+    
+    attr_reader :x1, :y1, :x2, :y2
     
     def initialize(x1, y1 , x2, y2)
         @x1 = x1
@@ -13,6 +15,10 @@ module OCRBox
         @x2 >= element.x2 and
         @y1 <= element.y1 and 
         @y2 >= element.y2
+    end
+    
+    def enclosed_by?(element)
+        return element.encloses? self
     end
     
     def to_s
