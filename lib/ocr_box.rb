@@ -22,6 +22,14 @@ class OCRBox
         return element.encloses? self
     end
     
+    def left_of?(element)
+        @x2 < element.x1
+    end
+    
+    def right_of?(element)
+        @x1 > element.x2
+    end
+    
     def to_s
         "tl->(x:#{@x1} y:#{@y1})/br->:(x:#{@x2} y:#{@y2})"
     end

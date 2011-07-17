@@ -1,5 +1,6 @@
 #coding: utf-8
 require_relative "ocrx_word"
+require 'nokogiri'
 
 class OCRPage < OCRBox
     attr_reader :lines, :words
@@ -37,7 +38,7 @@ class OCRPage < OCRBox
     
     
     def file_as_string(filename)
-            hocr_page_contents = File.open(filename,"r") { |f| f.read }
+        hocr_page_contents = File.open(filename,"r") { |f| f.read }
     end
     
 end

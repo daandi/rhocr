@@ -42,6 +42,24 @@ describe OCRBox do
         end
     end
     
+    describe '#right_of?(element)' do
+        it 'should be right of any box-element that has a smaller x1 value than current x2 value' do
+            @box.right_of?( OCRBox.new(0,2,0,8) ).should be_true #x1 == x2 -> Eine Linie
+        end
+        it 'should not be right of' do
+            @box.right_of?( OCRBox.new(1,2,2,8) ).should be_false
+        end
+    end
+    
+    describe '#left_of?(element)' do
+        it 'should be left of any box-element that has a larger x1 than the current box has x2' do
+            @box.left_of?( OCRBox.new(21,2,21,8) ).should be_true #x1 == x2 -> Eine Linie
+        end
+        it 'should not be left of' do
+            @box.left_of?( OCRBox.new(1,2,2,8) ).should be_false
+        end
+    end
+    
 
     
     
