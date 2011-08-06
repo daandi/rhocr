@@ -1,14 +1,21 @@
 #coding: utf-8
 
-class OCRBox
+class HOCRBox
     
-    attr_reader :x1, :y1, :x2, :y2
+    attr_reader :x1, :y1, :x2, :y2, :upper_left, :lower_right
     
     def initialize(x1, y1 , x2, y2)
+        
+        if x1 > x2 || y1 > y2 then
+            raise " Negative dimensions of OCRBox ar not allowed. x1 #{x1} / x2 #{x2} - y1 {y1} / y2 #{y2}"
+        end
+        
         @x1 = x1
         @y1 = y1
         @x2 = x2
         @y2 = y2
+        @upper_left = [@x1,@y1]
+        @lower_rigth = [@x2,@y2]
     end
     
     def encloses?(element)
@@ -30,8 +37,17 @@ class OCRBox
         @x1 > element.x2
     end
     
+    def left_distance_to(element)
+        @x1 - element.x2
+    end
+    
+    def right_distance_to(element)
+        #element.x1 - @x2
+        element.left_distance_to(self)
+    end
+    
     def to_s
-        "tl->(x:#{@x1} y:#{@y1})/br->:(x:#{@x2} y:#{@y2})"
+        "#{self.class}(#{@x1}/#{@y1},#{@x2}/#{@y2})" 
     end
     
     def to_css_style

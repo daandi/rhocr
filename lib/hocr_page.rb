@@ -1,12 +1,14 @@
 #coding: utf-8
 require_relative "ocrx_word"
 require 'nokogiri'
+require 'pp'
 
-class OCRPage < OCRBox
-    attr_reader :lines, :words
+class HOCRPage < HOCRBox
+    attr_reader :lines, :words, :meta_data
     
     def initialize(filename)
-        @lines =  hocr_lines( file_as_string(filename) ).select {|line| line.length > 0}
+       meta_data = Hash.new
+       read_local_html_file(filename)
     end
     
     def hocr_lines( hocr_contents)
@@ -36,9 +38,19 @@ class OCRPage < OCRBox
         [$1,$2,$3,$4]
     end
     
-    
-    def file_as_string(filename)
-        hocr_page_contents = File.open(filename,"r") { |f| f.read }
+    def read_local_html_file(filename)
+        doc = Nokogiri::HTML(File.open(filename,"r"))
+        read_meta_data(doc)
     end
+    
+    def read_meta_data(doc)
+        for md in doc.css('meta') do 
+            key = md.attribute('name')
+            value = md.attribute('content')
+            
+            pp [key,value]
+        end
+    end
+    
     
 end

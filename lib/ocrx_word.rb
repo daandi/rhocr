@@ -1,9 +1,9 @@
 #coding: utf-8
 
 require 'cgi'
-require_relative 'ocr_box'
+require_relative 'hocr_box'
 
-class OCRXWord < OCRBox
+class OCRXWord < HOCRBox
     
     attr_reader :text
     
@@ -17,7 +17,7 @@ class OCRXWord < OCRBox
     end
     
     def to_s
-        "#{@text}\t#{super}"
+        "#{@text}:\t#{super}"
     end
 
 end
