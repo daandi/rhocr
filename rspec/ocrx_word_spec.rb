@@ -5,7 +5,7 @@ require_relative '../lib/ocrx_word'
 describe OCRXWord do
   
   before(:each) do
-      @ocrx_word = OCRXWord.new(10,15,20,20,'_test_')
+      @ocrx_word = OCRXWord.new('_test_',10,15,20,20)
   end
   
   describe '#to_s' do

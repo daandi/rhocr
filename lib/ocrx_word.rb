@@ -7,8 +7,8 @@ class OCRXWord < HOCRBox
     
     attr_reader :text
     
-    def initialize(x1,y1,x2,y2,word)        
-        super(x1.to_i, y1.to_i, x2.to_i, y2.to_i)
+    def initialize(word, *coordinates)
+        super(coordinates)
         @text = word
     end
     

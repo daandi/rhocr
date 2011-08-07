@@ -4,7 +4,9 @@ class HOCRBox
     
     attr_reader :x1, :y1, :x2, :y2, :upper_left, :lower_right
     
-    def initialize(x1, y1 , x2, y2)
+    def initialize(* coordinates)
+        
+        x1,y1,x2,y2 = coordinates.flatten.collect { |x| x.to_i}
         
         if x1 > x2 || y1 > y2 then
             raise " Negative dimensions of OCRBox ar not allowed. x1 #{x1} / x2 #{x2} - y1 {y1} / y2 #{y2}"
@@ -59,9 +61,6 @@ class HOCRBox
         "position:absolute; top:#{top}px; left:#{left}px; height:#{height}px; width:#{width}px;"
     end
     
-    def to_json
-        
-    end
     
 end
 
