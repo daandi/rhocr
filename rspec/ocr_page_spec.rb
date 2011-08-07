@@ -17,6 +17,10 @@ describe OCRPage do
   
   
   describe 'HOCRPage' do
+      it 'should have data' do
+        @hocr_page.page.should be_true
+      end
+      
       it 'should have metedata' do
       end
       it 'should have blocks' do
@@ -24,6 +28,7 @@ describe OCRPage do
       it 'should have paragraphs' do
       end
       it 'should have lines' do
+          p @hocr_page.lines
       end
       it 'should have words' do
       end
