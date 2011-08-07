@@ -13,16 +13,26 @@ class OCRPage < HOCRBox
        process_hocr_html_file(filename)
     end
     
-    def blocks
-        @page[:blocks]
+    def each_block
+        @page[:blocks].collect
     end
     
-    def paragraphs
-        blocks.collect { |element| element[:paragraphs] }
+    def each_paragraph
+        for block in @page[:blocks].collect do
+                for paragraph in block[:paragraphs] do
+                    yield paragraph
+                end
+        end
     end
     
-    def lines
-        paragraphs { |element| element[:lines] }
+    def each_line
+        for block in @page[:blocks].collect do
+                for paragraph in block[:paragraphs] do
+                        for line in paragraph[:lines] do
+                            yield line
+                        end
+                end
+        end
     end
     
     

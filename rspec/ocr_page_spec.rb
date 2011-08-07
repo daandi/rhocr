@@ -1,6 +1,7 @@
 #coding: utf-8
 require_relative '../lib/ocr_page'
 require 'nokogiri'
+require 'pp'
 
 describe OCRPage do
   
@@ -15,6 +16,18 @@ describe OCRPage do
     end
   end
   
+  describe '#Iterators' do
+    it 'should have a block iterator #each_block' do
+
+    end
+    it 'should have a paragraph iterator #each_paragraph' do
+    end
+    
+    it 'should have a line iterator #each_line' do
+    end
+    
+  end
+  
   
   describe 'HOCRPage' do
       it 'should have data' do
@@ -22,15 +35,6 @@ describe OCRPage do
       end
       
       it 'should have metedata' do
-      end
-      it 'should have blocks' do
-      end
-      it 'should have paragraphs' do
-      end
-      it 'should have lines' do
-          p @hocr_page.lines
-      end
-      it 'should have words' do
       end
   end
   
