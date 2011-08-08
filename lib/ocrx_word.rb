@@ -1,9 +1,9 @@
 #coding: utf-8
 
 require 'cgi'
-require_relative 'hocr_element'
+require_relative 'hocr_box'
 
-class OCRXWord < HOCRElement
+class OCRXWord < HOCRBox
     
     attr_reader :text
     
