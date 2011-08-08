@@ -25,5 +25,5 @@ end
 
 def get_enclosed_words(x1, y1, x2 ,y2, page)
     @page = OCRPage.new("../data/#{page}")
-    @page.enclosed_words( OCRBox.new(x1.to_i, y1.to_i, x2.to_i, y2.to_i) )
+    @page.enclosed_words( OCRBox.new(x1, y1, x2 ,y2) )
 end

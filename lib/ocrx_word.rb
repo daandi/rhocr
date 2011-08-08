@@ -1,14 +1,18 @@
 #coding: utf-8
 
 require 'cgi'
-require_relative 'hocr_box'
+require_relative 'hocr_element'
 
-class OCRXWord < HOCRBox
+class OCRXWord < HOCRElement
     
     attr_reader :text
     
+    def initialize(html_fragment)
+        super(html_fragment)
+    end
+    
     def initialize(word, *coordinates)
-        super(coordinates)
+        super super(coordinates)
         @text = word
     end
     

@@ -2,7 +2,7 @@
 
 class HOCRBox
     
-    attr_reader :x1, :y1, :x2, :y2, :upper_left, :lower_right
+    attr_reader :x1, :y1, :x2, :y2, :upper_left, :lower_right, :coordinates
     
     def initialize(* coordinates)
         
@@ -18,6 +18,7 @@ class HOCRBox
         @y2 = y2
         @upper_left = [@x1,@y1]
         @lower_rigth = [@x2,@y2]
+        @coordinates = [@x1,@y1,@x2,@y2]
     end
     
     def encloses?(element)

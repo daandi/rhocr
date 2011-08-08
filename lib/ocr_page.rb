@@ -10,6 +10,7 @@ class OCRPage < HOCRBox
     def initialize(filename)
        @page = {:blocks => []}
        @meta_data = Hash.new
+       @tokens ||= each_word
        process_hocr_html_file(filename)
     end
     
@@ -35,6 +36,17 @@ class OCRPage < HOCRBox
         end
     end
     
+    def each_word
+        for block in @page[:blocks].collect do
+                for paragraph in block[:paragraphs] do
+                        for line in paragraph[:lines] do
+                                for word in line[:words] do
+                                    yield word
+                                end
+                        end
+                end
+        end
+    end
     
     def process_hocr_html_file(filename)
         hocr_doc = Nokogiri::HTML(File.open(filename,"r"))
@@ -72,7 +84,7 @@ class OCRPage < HOCRBox
     
     
     def enclosed_words(box)
-        words.select { |word| word.enclosed_by? box }
+        @tokens.select { |word| word.enclosed_by? box }
     end
         
     def get_position(element)
