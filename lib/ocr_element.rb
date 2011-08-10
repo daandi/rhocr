@@ -5,6 +5,8 @@ require_relative 'hocr_box'
 
 class OCRElement < HOCRBox
     
+    include Enumerable
+    
     attr_reader :ocr_class, :children
     
     
@@ -35,6 +37,12 @@ class OCRElement < HOCRBox
             children << OCRElement.new(child_fragment_html)
         end
         children
+    end
+    
+    def each
+        children.each do |child|
+            yield child
+        end
     end
     
 end

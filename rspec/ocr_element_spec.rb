@@ -24,8 +24,10 @@ describe OCRElement do
            @ocr_element.coordinates.should == [79, 109, 1119, 189]
       end
       it 'should have children' do
-          for child in @ocr_element.children do
-              puts child
+          for line in @ocr_element.children do
+              for word in line do
+                  pp word
+              end
           end
       end
       
