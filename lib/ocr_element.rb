@@ -9,16 +9,20 @@ class OCRElement < HOCRBox
     
     attr_reader :ocr_class, :children
     
-    
     def initialize(ocr_element_html)
         
         super( extract_coordinates(ocr_element_html) )
         @ocr_class = extract_ocr_class(ocr_element_html)
-        @children = extract_children(ocr_element_html)
+        @children = 
+            if (@ocr_class != 'ocrx_word') then
+                extract_children(ocr_element_html)
+            else
+                extract_word_children(ocr_element_html)
+            end
     end
     
     def to_s
-        "#{@ocr_class}:#{super}"
+        "#{@ocr_class}:#{super} -> #{ @children.collect { |c| c.to_s} }"
     end
     
     def extract_coordinates(ocr_element_html)
@@ -37,6 +41,10 @@ class OCRElement < HOCRBox
             children << OCRElement.new(child_fragment_html)
         end
         children
+    end
+    
+    def extract_word_children(ocr_element_html)
+        [ocr_element_html.text]
     end
     
     def each

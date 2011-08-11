@@ -15,7 +15,7 @@ describe OCRElement do
   
   describe '#initialize and Object' do
       it 'should create an element from html input' do
-          @ocr_element
+          puts @ocr_element
       end
       it 'should have an ocr_class' do
            @ocr_element.ocr_class.should == 'ocr_par'
@@ -24,11 +24,7 @@ describe OCRElement do
            @ocr_element.coordinates.should == [79, 109, 1119, 189]
       end
       it 'should have children' do
-          for line in @ocr_element.children do
-              for word in line do
-                  pp word
-              end
-          end
+           @ocr_element.children.length == 2
       end
       
   end
