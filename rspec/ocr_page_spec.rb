@@ -17,28 +17,15 @@ describe OCRPage do
   end
   
   describe '#Iterators' do
-    it 'should have a block iterator #each_block' do
-        
-    end
-    it 'should have a paragraph iterator #each_paragraph' do
-    end
-    
-    it 'should have a line iterator #each_line' do
-    end
-    
-    it 'should have a word iterator #each_word' do
-    end
+
     
   end
   
   
   describe 'HOCRPage' do
-      it 'should have data' do
-        @hocr_page.page.should be_true
-      end
+      it 'should have data' 
       
-      it 'should have metedata' do
-      end
+      it 'should have metedata' 
   end
   
 end

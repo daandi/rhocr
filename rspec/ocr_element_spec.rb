@@ -26,7 +26,20 @@ describe OCRElement do
       it 'should have children' do
            @ocr_element.children.length == 2
       end
+  end
+  
+  describe '#specialities' do
+      it 'should drop non-ocr-elements' 
+  end
+  
+  describe '#ocr_classes' do
+      it 'ocr_elements of class ocr_word should not have children' 
       
+      it 'ocr_elements of class ocr_line should have an alis for children called #words' 
+      
+      it 'ocr_elements of class ocr_par should have an alis for children called #lines' 
+      
+      it 'ocr_elements of class ocr_box should have an alis for children called #paragraphs'
   end
   
  end
