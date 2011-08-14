@@ -6,9 +6,14 @@ require 'pp'
 class OCRPage < OCRElement
     
     attr_accessor :meta_data, :page, :dimensions
-    
+
     def initialize(filename)
-        super
+
+       
+    end
+    
+    def each
+        
     end
     
     def each_block
@@ -27,17 +32,19 @@ class OCRPage < OCRElement
         
     end
     
+    def extract_page_dimensions_and_number( ocr_html_text_fragment )
+        bbox, ppageno = ocr_html_text_fragment.split(';')
+        ppageno =~ /(\d+)/
+        [extract_coordinates_from_string(bbox), $1 ]
+        
+    end
+    
     def process_hocr_html_file(filename)
         hocr_doc = Nokogiri::HTML(File.open(filename,"r"))
        
     end
     
-    
     def enclosed_words(box)
-    end
-        
-    def extract_page_dimensions_and_number( ocr_html_text_fragment )
-        
     end
     
 end

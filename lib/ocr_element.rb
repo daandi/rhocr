@@ -32,8 +32,11 @@ class OCRElement < HOCRBox
     end
     
     def extract_coordinates(ocr_element_html)
-        pos = ocr_element_html['title']
-        pos =~ /bbox (\d+) (\d+) (\d+) (\d+)/
+        extract_coordinates_from_string ocr_element_html['title']
+    end
+    
+    def extract_coordinates_from_string(s)
+        s =~ /bbox (\d+) (\d+) (\d+) (\d+)/
         [$1, $2, $3, $4]
     end
     

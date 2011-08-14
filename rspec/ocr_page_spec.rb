@@ -6,13 +6,19 @@ require 'pp'
 describe OCRPage do
   
   before(:each) do
-      @ocr_page = OCRPage.new('data/bsb_test.html')
+      @test_page ||= OCRPage.new('data/bsb_test.html')
   end
   
-  describe '#extract_page_dimensions_and_number' do
-    bbox, page_number = OCRPage.new('data/bsb_test.html').extract_page_dimensions_and_number('bbox 0 0 1326 1326;ppageno 33')
-    bbox.should == '0 0 1326 1326'
-    page_number.should == 36
+  describe '#constructor and mehtods for construction' do
+    it 'should work' do
+        p @test_page.public_methods.sort
+    end
+    
+    it 'should have an extractor method for page dimensions and page number' do
+        dimensions, page_number = @test_page.extract_page_dimensions_and_number "bbox 0 0 1326 1326;ppageno 33"
+        page_number.should == "33"
+        dimensions.should == %w{ 0 0 1326 1326}
+    end
   end
   
   describe 'Page' do
