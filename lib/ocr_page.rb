@@ -1,5 +1,4 @@
 #coding: utf-8
-require_relative "ocrx_word"
 require 'nokogiri'
 require 'pp'
 

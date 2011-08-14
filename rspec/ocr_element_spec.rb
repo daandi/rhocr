@@ -44,10 +44,12 @@ describe OCRElement do
       end
       
       it 'ocr_elements of class ocr_word should not have children' 
-      
-
-      
-
+  end
+  
+  describe 'html_methods' do
+      it 'should have a #to_html method' do
+        @ocr_element.to_html.should == "<span style='position:absolute; top:109px; left:79px; height:80px; width:1040px;' class='ocr_par'></span>"
+      end
   end
   
  end

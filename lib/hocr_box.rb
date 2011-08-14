@@ -50,7 +50,7 @@ class HOCRBox
     end
     
     def to_s
-        "#(#{@x1}/#{@y1},#{@x2}/#{@y2})" 
+        "(#{@x1}/#{@y1},#{@x2}/#{@y2})" 
     end
     
     def to_css_style

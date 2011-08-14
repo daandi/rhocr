@@ -28,7 +28,7 @@ class OCRElement < HOCRBox
     end
     
     def to_s
-        "#{self.class}:#{super}->\n#{ @children.collect { |c| c.to_s} }"
+        "#{self.class}:#{super}->\n" + children.map { |c| "\t#{c.to_s}" }.join("\n")
     end
     
     def extract_coordinates(ocr_element_html)
@@ -60,6 +60,10 @@ class OCRElement < HOCRBox
         end
     end
     
+    def to_html
+        "<span style='#{ to_css_style }' class='#{@ocr_class}'></span>"
+    end
+    
     protected
     def initialize(ocr_element_html)
         @ocr_class = extract_ocr_class(ocr_element_html)
@@ -83,10 +87,7 @@ class OCRLine < OCRElement
 end
 
 class OCRParagraph < OCRElement
-    #alias :lines :children
-    def lines
-        @children
-    end
+    alias :lines :children
 end
 class OCRBlock < OCRElement
     alias :paragraphs :children

@@ -16,7 +16,7 @@ describe HOCRBox do
     
     describe "#to_s" do
         it "prints a human readable Box-Version with coordinates upper_left(x,y) bottom_right(x,y)" do
-            @box.to_s.should == "HOCRBox(1/2,20/8)"
+            @box.to_s.should == "(1/2,20/8)"
         end
     end
     
