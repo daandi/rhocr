@@ -62,6 +62,10 @@ class HOCRBox
         "position:absolute; top:#{top}px; left:#{left}px; height:#{height}px; width:#{width}px;"
     end
     
+    def to_html(css_class = 'hocr_box')
+        "<span style='#{ to_css_style }' class='#{css_class}'></span>"
+    end
+    
     
 end
 

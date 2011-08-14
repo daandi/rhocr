@@ -20,6 +20,15 @@ describe HOCRBox do
         end
     end
     
+    describe "HTML-Methods" do
+        it "prints css style used as part in css for positioning element" do
+            @box.to_css_style.should == "position:absolute; top:2px; left:1px; height:6px; width:19px;"
+        end
+        it "has a to html_method" do
+            @box.to_html('test_class').should == "<span style='position:absolute; top:2px; left:1px; height:6px; width:19px;' class='test_class'></span>"
+        end
+    end
+    
     describe '#encloses?(element)' do
         it "tests waether given HOCRBox is enclosed by the current HOCRBox" do
             @box.encloses?( HOCRBox.new(0,3,19,7) ).should be_false

@@ -61,7 +61,7 @@ class OCRElement < HOCRBox
     end
     
     def to_html
-        "<span style='#{ to_css_style }' class='#{@ocr_class}'></span>"
+        super @ocr_class
     end
     
     protected
@@ -73,6 +73,7 @@ class OCRElement < HOCRBox
             else
                extract_word_children ocr_element_html
             end
+            
             super( extract_coordinates(ocr_element_html) )
     end
     

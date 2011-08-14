@@ -6,27 +6,30 @@ require 'pp'
 describe OCRPage do
   
   before(:each) do
-      @hocr_page ||= OCRPage.new('data/bsb_test.html')
-      @fragment = Nokogiri::HTML("<span class='ocr_line' title='bbox 432 32 1117 71'><span class='ocrx_word' title='bbox 432 32 588 67'>Athenobius</span> <span class='ocrx_word' title='bbox 606 48 640 54'>—</span> <span class='ocrx_word' title='bbox 657 34 749 62'>Aulon.</span> <span class='ocrx_word' title='bbox 1074 37 1117 71'>29</span></span>")
+      @ocr_page = OCRPage.new('data/bsb_test.html')
   end
   
-  describe '#get_position' do
-    it 'should extract the bounding box xoordinates' do
-        @hocr_page.get_position(@fragment).should == ["432", "32", "1117", "71"]
-    end
+  describe '#extract_page_dimensions_and_number' do
+    bbox, page_number = OCRPage.new('data/bsb_test.html').extract_page_dimensions_and_number('bbox 0 0 1326 1326;ppageno 33')
+    bbox.should == '0 0 1326 1326'
+    page_number.should == 36
   end
+  
+  describe 'Page' do
+      it 'should have a page-number'
+      it 'should have metedata'
+      it 'page should have dimensions'
+  end
+  
   
   describe '#Iterators' do
-
+      it 'should have a block iterator #each_block'
+      it 'should have a paragraph iterator #each_paragraph'
+      it 'should have a line iterator #each_line'
+      it 'should have a word iterator #each_word'
     
   end
   
-  
-  describe 'HOCRPage' do
-      it 'should have data' 
-      
-      it 'should have metedata' 
-  end
   
 end
 
