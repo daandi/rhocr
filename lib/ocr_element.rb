@@ -1,7 +1,6 @@
 #coding:utf-8
 
 require_relative 'hocr_box'
-require_relative 'ocrx_word'
 
 class OCRElement < HOCRBox
     
@@ -9,23 +8,27 @@ class OCRElement < HOCRBox
     
     attr_reader :ocr_class, :children
     
-    def initialize(ocr_element_html)
-        @ocr_class = extract_ocr_class(ocr_element_html)
-        @children = 
-            if (@ocr_class != 'ocrx_word') then
-                extract_children(ocr_element_html)
-            else
-               extract_word_children ocr_element_html
-            end
-            super( extract_coordinates(ocr_element_html) )
-            
-            #case @ocr_class
-                 
-            
+    def self.create_from_html(ocr_element_html)
+        case ocr_element_html['class']
+        when 'ocrx_block' then
+            OCRBox.new(ocr_element_html)
+        when 'ocr_par' then
+            OCRParagraph.new(ocr_element_html)
+        when 'ocr_line' then
+            OCRLine.new(ocr_element_html)
+        when 'ocrx_word' then
+            OCRWord.new(ocr_element_html)
+        else
+            OCRElement.new(ocr_element_html)
+        end
+    end
+    
+    def self.create(ocr_element_html)
+        create_from_html(ocr_element_html)
     end
     
     def to_s
-        "#{@ocr_class}:#{super}->\n#{ @children.collect { |c| c.to_s} }"
+        "#{self.class}:#{super}->\n#{ @children.collect { |c| c.to_s} }"
     end
     
     def extract_coordinates(ocr_element_html)
@@ -41,7 +44,7 @@ class OCRElement < HOCRBox
     def extract_children(ocr_element_html)
         children = []
         for child_fragment_html in ocr_element_html.children do
-            children << OCRElement.new(child_fragment_html)
+            children << OCRElement.create(child_fragment_html)
         end
         # br Elemente ausfiltern
         children.reject { |child| child.ocr_class == nil}
@@ -57,4 +60,35 @@ class OCRElement < HOCRBox
         end
     end
     
+    protected
+    def initialize(ocr_element_html)
+        @ocr_class = extract_ocr_class(ocr_element_html)
+        @children = 
+            if (@ocr_class != 'ocrx_word') then
+                extract_children(ocr_element_html)
+            else
+               extract_word_children ocr_element_html
+            end
+            super( extract_coordinates(ocr_element_html) )
+    end
+    
 end
+
+class OCRWord < OCRElement
+    alias :text :children
+end
+
+class OCRLine < OCRElement
+    alias :words :children
+end
+
+class OCRParagraph < OCRElement
+    #alias :lines :children
+    def lines
+        @children
+    end
+end
+class OCRBlock < OCRElement
+    alias :paragraphs :children
+end
+

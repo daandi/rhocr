@@ -10,7 +10,7 @@ describe OCRElement do
       html_string = "<p class='ocr_par' title='bbox 79 109 1119 189' style='font-size:8pt;font-family:Arial;font-style:normal'><span class='ocr_line' title='bbox 79 109 1119 145'><span class='ocrx_word' title='bbox 79 109 294 144'>Athenobius,</span> <span class='ocrx_word' title='bbox 334 112 398 139'>Der</span> <span class='ocrx_word' title='bbox 417 115 476 139'>von</span> <span class='ocrx_word' title='bbox 494 112 545 139'>der</span> <span class='ocrx_word' title='bbox 565 112 687 140'>Göttin</span> <span class='ocrx_word' title='bbox 707 112 857 140'>Minerva</span> <span class='ocrx_word' title='bbox 876 112 954 145'>lebt,</span> <span class='ocrx_word' title='bbox 974 112 1043 140'>oder:</span> <span class='ocrx_word' title='bbox 1062 112 1119 140'>Mi»</span><br></span><span class='ocr_line' title='bbox 108 155 300 189'><span class='ocrx_word' title='bbox 108 159 183 182'>nerva</span> <span class='ocrx_word' title='bbox 201 155 300 189'>Bogen.</span></span></p>"
       
       @html_fragment = Nokogiri::HTML::fragment(html_string).child
-      @ocr_element = OCRElement.new(@html_fragment)
+      @ocr_element = OCRElement.create(@html_fragment)
   end
   
   describe '#initialize and Object' do
@@ -29,17 +29,25 @@ describe OCRElement do
   end
   
   describe '#specialities' do
-      it 'should drop non-ocr-elements' 
+      it 'should drop non-ocr-elements'
   end
   
   describe '#ocr_classes' do
+      it 'ocr_elements of class ocr_box should have an alias for children called #paragraphs'
+      
+      it 'ocr_elements of class ocr_par should have an alias for children called #lines' do
+          @ocr_element.respond_to?(:lines).should be_true
+      end
+
+      it 'ocr_elements of class ocr_line should have an alis for children called #words' do
+        @ocr_element.lines[0].respond_to?(:words).should be_true
+      end
+      
       it 'ocr_elements of class ocr_word should not have children' 
       
-      it 'ocr_elements of class ocr_line should have an alis for children called #words' 
+
       
-      it 'ocr_elements of class ocr_par should have an alis for children called #lines' 
-      
-      it 'ocr_elements of class ocr_box should have an alis for children called #paragraphs'
+
   end
   
  end
