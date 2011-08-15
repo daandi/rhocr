@@ -62,6 +62,10 @@ class OCRElement < HOCRBox
         children.reject { |child| child.ocr_class == nil}
     end
     
+    def extract_children(ocr_element_html)
+        self.extract_children(ocr_element_html)
+    end
+    
     def self.extract_word_children(ocr_element_html)
         [ocr_element_html.text]
     end

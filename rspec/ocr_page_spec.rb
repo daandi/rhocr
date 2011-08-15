@@ -32,6 +32,7 @@ describe OCRPage do
       it 'page should have #coordinates' do
           @test_page.coordinates.should == [0,0,1326,1326]
       end
+      it 'should have children'
   end
   
   

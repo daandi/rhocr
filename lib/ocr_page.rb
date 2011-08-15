@@ -9,10 +9,10 @@ class OCRPage < OCRElement
 
     def initialize(filename)
         doc = process_hocr_html_file filename
-        coordinates, @page_number = extract_bbox_ppageno( doc.at_css("div.ocr_page")['title'] )
+        page_inhalt = doc.at_css("div.ocr_page")
+        coordinates, @page_number = extract_bbox_ppageno page_inhalt['title']
         children = []
         super('ocr_page', children, coordinates)
-        
     end
     
     
