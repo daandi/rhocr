@@ -9,7 +9,6 @@ class OCRElement < HOCRBox
     
     def self.create_from_html(ocr_element_html)
         create(ocr_element_html)
-
     end
     
     def self.create(ocr_element_html)
@@ -44,6 +43,11 @@ class OCRElement < HOCRBox
         s =~ /bbox (\d+) (\d+) (\d+) (\d+)/
         [$1, $2, $3, $4]
     end
+    
+    def extract_coordinates_from_string(s)
+         s =~ /bbox (\d+) (\d+) (\d+) (\d+)/
+         [$1, $2, $3, $4]
+     end
     
     def self.extract_ocr_class(ocr_element_html)
         ocr_element_html['class']

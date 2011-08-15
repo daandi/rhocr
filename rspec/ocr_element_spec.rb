@@ -14,6 +14,7 @@ describe OCRElement do
   end
   
   describe '#initialize and Object' do
+      it 'should create an element given ocr_class, children and coordiantes'
       it 'should create an element from html input' do
           puts @ocr_element
       end
@@ -28,9 +29,6 @@ describe OCRElement do
       end
   end
   
-  describe '#specialities' do
-      it 'should drop non-ocr-elements'
-  end
   
   describe '#ocr_classes' do
       it 'ocr_elements of class ocr_box should have an alias for children called #paragraphs'
