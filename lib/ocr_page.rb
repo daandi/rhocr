@@ -11,7 +11,9 @@ class OCRPage < OCRElement
         doc = process_hocr_html_file(filename)
         page_content = doc.at_css("div.ocr_page")
         coordinates, @page_number = extract_bbox_ppageno( page_content['title'] )
-        children = []
+        
+        @page_content  = doc.at_css("div.ocr_page")
+        children = OCRElement.extract_children(@page_content)
         super('ocr_page', children, coordinates)
     end
     
@@ -39,8 +41,10 @@ class OCRPage < OCRElement
     end
     
     def process_hocr_html_file(filename)
-        hocr_doc = Nokogiri::HTML(File.open(filename,"r"))
+        html_string = File.open(filename,"r").read
+        Nokogiri::HTML(html_string).elements
     end
+    
     
     def enclosed_words(box)
     end

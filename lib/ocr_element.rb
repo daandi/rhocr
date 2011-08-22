@@ -23,7 +23,7 @@ class OCRElement < HOCRBox
         
         case ocr_class
         when 'ocrx_block' then
-            OCRBox.new(ocr_class,children,coordinates)
+            OCRBlock.new(ocr_class,children,coordinates)
         when 'ocr_par' then
             OCRParagraph.new(ocr_class,children,coordinates)
         when 'ocr_line' then
@@ -55,10 +55,10 @@ class OCRElement < HOCRBox
     
     def self.extract_children(ocr_element_html)
         children = []
-        for child_fragment_html in ocr_element_html.children do
-            children << OCRElement.create(child_fragment_html)
+        for child_fragment_html in ocr_element_html.elements do
+                children << OCRElement.create(child_fragment_html)
         end
-        # br Elemente ausfiltern
+        #br Elemente ausfiltern
         children.reject { |child| child.ocr_class == nil}
     end
     
@@ -118,6 +118,7 @@ end
 class OCRParagraph < OCRElement
     alias :lines :children
 end
+
 class OCRBlock < OCRElement
     alias :paragraphs :children
 end
