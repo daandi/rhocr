@@ -6,7 +6,8 @@ require 'pp'
 class OCRPage < OCRElement
     
     attr_accessor :meta_data, :page_number, :dimensions
-
+    alias :each_block :each
+    
     def initialize(filename)
         doc = process_hocr_html_file(filename)
         page_content = doc.at_css("div.ocr_page")
@@ -18,20 +19,34 @@ class OCRPage < OCRElement
     end
     
     
-    def each_block
-       
-    end
-    
     def each_paragraph
-       
+        for block in children do
+            for paragraph in block do
+                yield paragraph
+            end
+        end
     end
     
     def each_line
-        
+        for block in children do
+            for paragraph in block do
+                for line in  paragraph do
+                    yield line
+                end
+            end
+        end
     end
     
     def each_word
-        
+        for block in children do
+            for paragraph in block do
+                for line in  paragraph do
+                    for word in line do
+                        yield word
+                    end
+                end
+            end
+        end
     end
     
     def extract_bbox_ppageno( ocr_html_text_fragment )

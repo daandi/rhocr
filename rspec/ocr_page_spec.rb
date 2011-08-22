@@ -33,15 +33,33 @@ describe OCRPage do
           @test_page.coordinates.should == [0,0,1326,1326]
       end
       it 'should have children' do
-        puts @test_page
+        @test_page.children.should_not == []
       end
   end
   
   
   describe '#Iterators' do
-      it 'should have a block iterator #each_block'
-      it 'should have a paragraph iterator #each_paragraph'
-      it 'should have a line iterator #each_line'
+      it 'should have a block iterator #each_block' do
+          a = []
+          @test_page.each_block do |block|
+             a << block
+          end
+          a.length.should == 1
+      end
+      it 'should have a paragraph iterator #each_paragraph' do
+          a = []
+          @test_page.each_paragraph do |paragraph|
+              a << paragraph
+          end
+          a.length.should == 28
+      end
+      it 'should have a line iterator #each_line' do
+          a = []
+          @test_page.each_line do |line|
+                a << line
+            end
+            p  a.length
+      end
       it 'should have a word iterator #each_word'
     
   end
