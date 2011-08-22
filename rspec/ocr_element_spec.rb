@@ -50,4 +50,9 @@ describe OCRElement do
       end
   end
   
+  describe 'ocr_word' do
+    it 'should have an differing #to_s method'
+    it 'should not have children'
+  end
+  
  end

@@ -8,9 +8,9 @@ class OCRPage < OCRElement
     attr_accessor :meta_data, :page_number, :dimensions
 
     def initialize(filename)
-        doc = process_hocr_html_file filename
-        page_inhalt = doc.at_css("div.ocr_page")
-        coordinates, @page_number = extract_bbox_ppageno page_inhalt['title']
+        doc = process_hocr_html_file(filename)
+        page_content = doc.at_css("div.ocr_page")
+        coordinates, @page_number = extract_bbox_ppageno( page_content['title'] )
         children = []
         super('ocr_page', children, coordinates)
     end

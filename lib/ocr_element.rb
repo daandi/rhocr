@@ -77,7 +77,7 @@ class OCRElement < HOCRBox
     end
     
     def to_s
-        "#{self.class}:#{super}->\n" + children.map { |c| "\t#{c.to_s}" }.join("\n")
+        "#{self.class}:#{ coordinates_to_s }->\n" + children.map { |c| "\t#{c.to_s}" }.join("\n")
     end
     
     def each
@@ -93,13 +93,28 @@ class OCRElement < HOCRBox
 end
 
 class OCRWord < OCRElement
-    alias :text :children
+    
+    def text
+        children.flatten[0]
+    end
+    
+    def to_s
+        text
+    end
+    
 end
 
 class OCRLine < OCRElement
     alias :words :children
+    
+    def to_s
+        "#{self.class} #{coordinates_to_s} ->[\n" + 
+        words.map {|w| "#{w.coordinates_to_s}\t#{w.to_s}"}.join("\n") +
+        "]"
+        
+    end
+    
 end
-
 class OCRParagraph < OCRElement
     alias :lines :children
 end
