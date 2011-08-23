@@ -69,8 +69,5 @@ describe OCRPage do
       end
     
   end
-  
-  
-end
 
-# Test
+end
