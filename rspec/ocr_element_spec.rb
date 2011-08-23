@@ -14,9 +14,15 @@ describe OCRElement do
   end
   
   describe '#initialize and Object' do
-      it 'should create an element given ocr_class, children and coordiantes'
+      it 'should create an element given ocr_class, children and coordiantes' do
+          test_element = OCRElement.new('test', [], %w{10, 11, 20, 21})
+          test_element.children.should == []
+          test_element.coordinates.should == [10,11,20,21]
+          test_element.ocr_class.should == 'test'
+      end
+      
       it 'should create an element from html input' do
-          puts @ocr_element
+          @ocr_element.should_not == nil
       end
       it 'should have an ocr_class' do
            @ocr_element.ocr_class.should == 'ocr_par'
@@ -31,7 +37,9 @@ describe OCRElement do
   
   
   describe '#ocr_classes' do
-      it 'ocr_elements of class ocr_box should have an alias for children called #paragraphs'
+      it 'ocr_elements of class ocr_block should have an alias for children called #paragraphs' do
+        OCRBlock.new('test', [], %w{10, 11, 20, 21}).respond_to?(:paragraphs).should be_true
+      end
       
       it 'ocr_elements of class ocr_par should have an alias for children called #lines' do
           @ocr_element.respond_to?(:lines).should be_true
@@ -40,8 +48,6 @@ describe OCRElement do
       it 'ocr_elements of class ocr_line should have an alis for children called #words' do
         @ocr_element.lines[0].respond_to?(:words).should be_true
       end
-      
-      it 'ocr_elements of class ocr_word should not have children' 
   end
   
   describe 'html_methods' do
@@ -51,8 +57,9 @@ describe OCRElement do
   end
   
   describe 'ocr_word' do
-    it 'should have an differing #to_s method'
-    it 'should not have children'
+      it 'ocr_elements of class ocr_word should have a #text method' do
+         @ocr_element.lines[0].words[5].text.should == "Minerva"
+      end
   end
   
  end

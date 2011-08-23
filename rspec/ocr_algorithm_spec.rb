@@ -3,13 +3,5 @@
 require_relative '../lib/ocr_algorithm'
 
 describe OCRAlgorithm do
-    
-    before(:each) do
-        
-    end
-    
-    describe "" do
-        it '' do
-        end
-    end
+    it 'should be implemented'
 end
