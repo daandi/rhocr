@@ -58,9 +58,15 @@ describe OCRPage do
           @test_page.each_line do |line|
                 a << line
             end
-            p  a.length
+          a.length.should == 43
       end
-      it 'should have a word iterator #each_word'
+      it 'should have a word iterator #each_word' do
+        a = []
+        @test_page.each_word do |word|
+            a << word
+        end
+        a.length.should == 346
+      end
     
   end
   

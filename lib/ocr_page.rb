@@ -7,6 +7,7 @@ class OCRPage < OCRElement
     
     attr_accessor :meta_data, :page_number, :dimensions
     alias :each_block :each
+    alias :blocks :children
     
     def initialize(filename)
         doc = process_hocr_html_file(filename)
@@ -20,7 +21,7 @@ class OCRPage < OCRElement
     
     
     def each_paragraph
-        for block in children do
+        for block in blocks do
             for paragraph in block do
                 yield paragraph
             end
@@ -28,7 +29,7 @@ class OCRPage < OCRElement
     end
     
     def each_line
-        for block in children do
+        for block in blocks do
             for paragraph in block do
                 for line in  paragraph do
                     yield line
@@ -38,7 +39,7 @@ class OCRPage < OCRElement
     end
     
     def each_word
-        for block in children do
+        for block in blocks do
             for paragraph in block do
                 for line in  paragraph do
                     for word in line do
