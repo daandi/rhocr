@@ -5,7 +5,7 @@ require 'pp'
 
 class OCRPage < OCRElement
     
-    attr_accessor :meta_data, :page_number, :dimensions
+    attr_accessor :meta_data, :page_number, :dimensions, :lines
     alias :each_block :each
     alias :blocks :children
     
@@ -17,6 +17,7 @@ class OCRPage < OCRElement
         @page_content  = doc.at_css("div.ocr_page")
         children = OCRElement.extract_children(@page_content)
         super('ocr_page', children, coordinates)
+        
     end
     
     
@@ -48,6 +49,18 @@ class OCRPage < OCRElement
                 end
             end
         end
+    end
+    
+    def lines
+        unless @lines then
+            @lines = []
+            
+            each_line do |line|
+                @lines << line
+            end
+            
+        end
+        @lines
     end
     
     def extract_bbox_ppageno( ocr_html_text_fragment )

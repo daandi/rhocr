@@ -47,7 +47,7 @@ class OCRElement < HOCRBox
     def extract_coordinates_from_string(s)
          s =~ /bbox (\d+) (\d+) (\d+) (\d+)/
          [$1, $2, $3, $4]
-     end
+    end
     
     def self.extract_ocr_class(ocr_element_html)
         ocr_element_html['class']
@@ -110,11 +110,18 @@ class OCRLine < OCRElement
     def to_s
         "#{self.class} #{coordinates_to_s} ->[\n" + 
         words.map {|w| "#{w.coordinates_to_s}\t#{w.to_s}"}.join("\n") +
+        "]" 
+    end
+    
+    def simple_line
+        "#{self.class} #{coordinates_to_s} ->[\n" + 
+        words.map {|w| w.to_s}.join("\n") +
         "]"
         
     end
     
 end
+
 class OCRParagraph < OCRElement
     alias :lines :children
 end

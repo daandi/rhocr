@@ -69,5 +69,12 @@ describe OCRPage do
       end
     
   end
+  
+  describe 'convinience methods' do
+      it 'should have a method #lines' do
+        @test_page.lines[5].children.length.should == 9
+      end
+  end
+  
 
 end
