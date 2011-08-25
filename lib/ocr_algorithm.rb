@@ -24,6 +24,7 @@ module OCRAlgorithm
         calculate_distance_clusters(max_distances, expected_clusters)
     end
     
+    
     def OCRAlgorithm.calculate_distance_clusters(data, expected_clusters)
         data = data.reject{ |d| d.nil?}.collect { |d| [d,d]}
   
@@ -39,8 +40,17 @@ module OCRAlgorithm
     
     def OCRAlgorithm.add_word_labels_based_on_distances(page, distances)
         page.each_line do |line|
-            line.each_cons(2) do |w1,w2|
-                 w1.right_distance_to(w2)
+           
+        end
+    end
+    
+    def OCRAlgorithm.add_word_labels_based_on_distances_to_line(line, distance, label)
+        distance_found_index = OCRAlgorithm.find_distance_position_in_line(line, distance)
+        line.each_with_index do |word,index|
+            if index <= distance_found_index then
+                word.labels << label
+            else
+                break
             end
         end
     end
@@ -58,5 +68,6 @@ module OCRAlgorithm
         # If nothings found return false
         false
     end
+    
     
 end

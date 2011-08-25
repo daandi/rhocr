@@ -33,6 +33,8 @@ describe OCRElement do
       it 'should have children' do
            @ocr_element.children.length == 2
       end
+      it 'should have labels'
+      it 'should have empty labels on constructio'
   end
   
   

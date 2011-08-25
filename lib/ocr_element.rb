@@ -6,6 +6,7 @@ class OCRElement < HOCRBox
     include Enumerable
     
     attr_reader :ocr_class, :children
+    attr_accessor :labels
     
     def self.create_from_html(ocr_element_html)
         create(ocr_element_html)
@@ -73,6 +74,7 @@ class OCRElement < HOCRBox
     def initialize(ocr_class, children, coordinates)
         @children = children
         @ocr_class = ocr_class
+        @labels = []
         super coordinates
     end
     
