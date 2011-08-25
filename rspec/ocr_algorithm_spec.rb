@@ -29,11 +29,31 @@ describe OCRAlgorithm do
             OCRAlgorithm.word_distances_for_line(@test_lines[1]).should == [40, 19, 18, 20, 20, 19, 20, 19]  
         end
         
-        it 'should create a lsit of the biggest word distance per line #find_big_word_distance' do
-            max =  OCRAlgorithm.find_big_word_distance(@test_page,3)
-            pp max
+        it 'should create a list of the biggest word distance per line #find_word_distance_clusters' do
+            max =  OCRAlgorithm.find_word_distance_clusters(@test_page , 3)
         end
-    
+        
+        it 'test #OCRAlgorithm.calculate_distance_clusters(data, expected_clusters)'
+        
+        it 'should extract the lower bounds of the clusters #OCRAlgorithm.extract_cluster_lower_bounds(cluster_object)' do
+            
+            OCRAlgorithm.extract_cluster_lower_bounds(  OCRAlgorithm.find_word_distance_clusters(@test_page , 3)).
+            should == [18, 35, 325]
+            
+        end
+        
+        it 'should add labels to OCRWords based on lower bound distances'
+        
+        it 'should find the index before the distance between two words in a line appears' do
+            OCRAlgorithm.find_distance_position_in_line(@test_page.lines[3], 35).should == false
+            OCRAlgorithm.find_distance_position_in_line(@test_page.lines[1], 35).should == 0
+            OCRAlgorithm.find_distance_position_in_line(@test_page.lines[0], 35).should == 2
+        end
+        
+        it 'should add labels to OCRWords based on lower bound distances per line' do
+        
+        end
+        
     end
     
 end
