@@ -2,30 +2,29 @@
 
 class HOCRBox
     
-    attr_reader :x1, :y1, :x2, :y2, :upper_left, :lower_right, :coordinates
-    
+    attr_reader :left, :top, :right, :bottom, :upper_left, :lower_right, :coordinates
     def initialize(* coordinates)
         
-        x1,y1,x2,y2 = coordinates.flatten.collect { |x| x.to_i}
+        left,top,right,bottom = coordinates.flatten.collect { |x| x.to_i}
         
-        if x1 > x2 || y1 > y2 then
-            raise " Negative dimensions of OCRBox ar not allowed. x1 #{x1} / x2 #{x2} - y1 {y1} / y2 #{y2}"
+        if left > right || top > bottom then
+            raise " Negative dimensions of OCRBox ar not allowed. left #{left} / right #{right} - top {top} / bottom #{bottom}"
         end
         
-        @x1 = x1
-        @y1 = y1
-        @x2 = x2
-        @y2 = y2
-        @upper_left = [@x1,@y1]
-        @lower_rigth = [@x2,@y2]
-        @coordinates = [@x1,@y1,@x2,@y2]
+        @left = left
+        @top = top
+        @right = right
+        @bottom = bottom
+        @upper_left = [ @left, @top]
+        @lower_rigth = [ @right, @bottom ]
+        @coordinates = [ @left, @top,@right, @bottom ]
     end
     
     def encloses?(element)
-        @x1 <= element.x1 and 
-        @x2 >= element.x2 and
-        @y1 <= element.y1 and 
-        @y2 >= element.y2
+        @left <= element.left and 
+        @right >= element.right and
+        @top <= element.top and 
+        @bottom >= element.bottom
     end
     
     def enclosed_by?(element)
@@ -33,19 +32,19 @@ class HOCRBox
     end
     
     def left_of?(element)
-        @x2 < element.x1
+        @right < element.left
     end
     
     def right_of?(element)
-        @x1 > element.x2
+        @left > element.right
     end
     
     def left_distance_to(element)
-        @x1 - element.x2
+        @left - element.right
     end
     
     def right_distance_to(element)
-        #element.x1 - @x2
+        #element.left - @right
         element.left_distance_to(self)
     end
     
@@ -54,16 +53,14 @@ class HOCRBox
     end
     
     def coordinates_to_s
-        "(#{@x1},#{@y1})/(#{@x2},#{@y2})" 
+        "(#{@left},#{@top})/(#{@right},#{@bottom})" 
     end
     
     def to_css_style
-        top     = @y1
-        left    = @x1
-        height  = @y2 - @y1
-        width   = @x2 - @x1
+        height  = @bottom - @top
+        width   = @right - @left
         
-        "position:absolute; top:#{top}px; left:#{left}px; height:#{height}px; width:#{width}px;"
+        "position:absolute; top:#{@top}px; left:#{@left}px; height:#{height}px; width:#{width}px;"
     end
     
     def to_html(css_class = 'hocr_box')
