@@ -42,7 +42,7 @@ describe OCRAlgorithm do
             
         end
         
-        it 'should add labels to OCRWords based on lower bound distances'
+        it 'should add features to OCRWords based on lower bound distances'
         
         it 'should find the index before the distance between two words in a line appears' do
             OCRAlgorithm.find_distance_position_in_line(@test_page.lines[3], 35).should == false
@@ -50,12 +50,25 @@ describe OCRAlgorithm do
             OCRAlgorithm.find_distance_position_in_line(@test_page.lines[0], 35).should == 2
         end
         
-        it 'should add labels to OCRWords based on lower bound distances per line OCRAlgorithm.add_word_labels_based_on_distances_to_line(line, distance, label)' do
-            OCRAlgorithm.add_word_labels_based_on_distances_to_line(@test_page.lines[1], 35, :before_distance)
+        it 'should add features to OCRWords based on lower bound distances per line OCRAlgorithm.add_word_features_based_on_distances_to_line(line, distance, label)' do
+            OCRAlgorithm.add_word_features_based_on_distances_to_line(@test_page.lines[1], 35, :before_distance)
             @test_page.lines[1].words[0].
-                labels.find(:before_distance).should be_true
+                features.find(:before_distance).should be_true
             @test_page.lines[1].words[1].
-                labels.include?(:before_distance).should be_false
+                features.include?(:before_distance).should be_false  
+        end
+        
+        it 'should add features based on distance to all line of a page' do
+            OCRAlgorithm.add_word_features_based_on_distance_to_page(@test_page, 35, :test)
+            
+            @test_page.each_word do |word|
+                if word.features.include?(:test) then
+                   puts word.mark_in_rspec('red')
+               else
+                   puts word
+               end
+           end
+            
         end
         
     end

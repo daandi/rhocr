@@ -13,14 +13,14 @@ describe OCRDocument do
         d.add_page 'data/bsb_test.html'
     end
     
-    before(:each) do
-        @test_document = OCRDocument.new
-        @test_document.add_page 'data/bsb_test.html'
-        @test_document.add_page 'data/Seite_Tagebuch_H_C_Lang_08.html'
-        @test_document.add_page 'data/test.html'
-    end
-    
     describe 'methods to #add_page an access pages' do
+        
+        before(:each) do
+            @test_document = OCRDocument.new
+            @test_document.add_page 'data/bsb_test.html'
+            @test_document.add_page 'data/Seite_Tagebuch_H_C_Lang_08.html'
+            @test_document.add_page 'data/test.html'
+        end
         
         it 'should have #pages' do
             @test_document.pages.keys.sort.should == [20, 33, 105]
@@ -41,7 +41,14 @@ describe OCRDocument do
         
     end
     
-    it 'should create ocr_pages given a list of filenames' 
+    it 'should create ocr_pages given a list of filenames #add_pages' do
+        ocrDoc = OCRDocument.new
+        example_folder = Dir["data/bsb10413454/hocr/*.html"]
+        start = Time.now()
+        ocrDoc.add_pages example_folder
+        puts "It took #{ (Time.now - start).to_i } seconds to process #{example_folder.length} pages"
+        ocrDoc.pages.length.should == example_folder.length
+    end 
     
     it 'should be able to use ocr_algorithms on pages'
     

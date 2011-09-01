@@ -38,20 +38,23 @@ module OCRAlgorithm
        lb.sort
     end
     
-    def OCRAlgorithm.add_word_labels_based_on_distances(page, distances)
-        page.each_line do |line|
-           
-        end
-    end
-    
-    def OCRAlgorithm.add_word_labels_based_on_distances_to_line(line, distance, label)
+    # Add feature for all words before a special lower bound,
+    # Example:
+    # Lemma_1 ... Lemmma_N | distance| Description
+    def OCRAlgorithm.add_word_features_based_on_distances_to_line(line, distance, feature)
         distance_found_index = OCRAlgorithm.find_distance_position_in_line(line, distance)
         line.each_with_index do |word,index|
-            if index <= distance_found_index then
-                word.labels << label
+            if distance_found_index and index <= distance_found_index then
+                word.features << feature
             else
                 break
             end
+        end
+    end
+    
+    def OCRAlgorithm.add_word_features_based_on_distance_to_page(page, distance, feature)
+        for line in page.lines do
+            OCRAlgorithm.add_word_features_based_on_distances_to_line(line, distance, feature)
         end
     end
     
@@ -59,13 +62,12 @@ module OCRAlgorithm
         line.each_with_index  do |word,index|
             if line.children[ index+1 ] then
                 next_word = line.children[ index+1 ]
-                
                 if word.right_distance_to(next_word) >= distance then
                     return index
                 end
             end
         end
-        # If nothings found return false
+        # If nothing is found return false
         false
     end
     

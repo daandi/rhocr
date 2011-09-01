@@ -6,7 +6,7 @@ class OCRElement < HOCRBox
     include Enumerable
     
     attr_reader :ocr_class, :children
-    attr_accessor :labels
+    attr_accessor :features
     
     def self.create_from_html(ocr_element_html)
         create(ocr_element_html)
@@ -74,12 +74,16 @@ class OCRElement < HOCRBox
     def initialize(ocr_class, children, coordinates)
         @children = children
         @ocr_class = ocr_class
-        @labels = []
+        @features = []
         super coordinates
     end
     
     def to_s
-        "#{self.class}:#{ coordinates_to_s }->\n" + children.map { |c| "\t#{c.to_s}" }.join("\n")
+        "#{self.class}:[#{@features}]#{ coordinates_to_s }->\n" + children.map { |c| "\t#{c.to_s}" }.join("\n")
+    end
+    
+    def mark_in_rspec(color)
+        "<span style='color: #{color}'>#{to_s}</span>"
     end
     
     def each
@@ -101,7 +105,7 @@ class OCRWord < OCRElement
     end
     
     def to_s
-        text
+        "#{text}[#{@features}]"
     end
     
 end

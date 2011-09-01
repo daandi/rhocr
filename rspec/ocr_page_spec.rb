@@ -19,6 +19,8 @@ describe OCRPage do
         page_number.should == 33
         dimensions.should == %w{ 0 0 1326 1326}
     end
+    
+    it 'should have an image attached'
   end
   
   describe 'Page' do

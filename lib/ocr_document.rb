@@ -9,6 +9,12 @@ class OCRDocument
         @pages = Hash.new()
     end
     
+    def add_pages( list_o_pages  )
+        for file in list_o_pages do
+            add_page(file)
+        end
+    end
+    
     def add_page( file )
         page = OCRPage.new( file )
         @pages[page.page_number] = page
