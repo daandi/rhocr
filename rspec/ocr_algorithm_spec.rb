@@ -61,12 +61,15 @@ describe OCRAlgorithm do
         it 'should add features based on distance to all line of a page' do
             OCRAlgorithm.add_word_features_based_on_distance_to_page(@test_page, 35, :test)
             
-            @test_page.each_word do |word|
-                if word.features.include?(:test) then
-                   puts word.mark_in_rspec('red')
-               else
-                   puts word
-               end
+            @test_page.each_line do |line|
+                line.each do |word|
+                    if word.features.include?(:test) then
+                        puts word.mark_in_rspec('red')
+                    else
+                        puts word
+                    end
+                end
+               puts "<br/>"
            end
             
         end

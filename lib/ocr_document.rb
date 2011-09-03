@@ -24,5 +24,11 @@ class OCRDocument
         @pages[number]
     end
     
+    def lines
+    end
+    
+    def words
+    end
+    
     
 end

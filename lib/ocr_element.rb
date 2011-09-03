@@ -78,22 +78,28 @@ class OCRElement < HOCRBox
         super coordinates
     end
     
-    def to_s
-        "#{self.class}:[#{@features}]#{ coordinates_to_s }->\n" + children.map { |c| "\t#{c.to_s}" }.join("\n")
-    end
-    
-    def mark_in_rspec(color)
-        "<span style='color: #{color}'>#{to_s}</span>"
-    end
-    
     def each
         children.each do |child|
             yield child
         end
     end
     
-    def to_html
-        super @ocr_class
+    def to_s
+        "#{self.class}:#{@features}#{ coordinates_to_s }->\n" + children.map { |c| "\t#{c.to_s}" }.join("\n")
+    end
+    
+    def mark_in_rspec(color)
+        "<span style='color: #{color}'>#{to_s}</span>"
+    end
+    
+    def to_image_html(dipslay_class = @ocr_class)
+        children_html = @children.map {|c| c.to_image_html}.join("")
+        "<span class='#{ dipslay_class }' style='#{ to_css_style }' > #{ children_html } </span>"
+    end
+    
+    def to_html( display_class = @ocr_class, style = nil )
+         children_html = @children.map {|c| c.to_html}.join("")
+        "<span class='#{ display_class }'> #{ children_html } </span>"
     end
     
 end
@@ -106,6 +112,14 @@ class OCRWord < OCRElement
     
     def to_s
         "#{text}[#{@features}]"
+    end
+    
+    def to_image_html
+        "<span class='#{ @ocr_class }' style='#{ to_css_style }'>#{ text }</span>"
+    end
+    
+    def to_html
+        "<span class='#{ @ocr_class }'>#{ text }</span>"
     end
     
 end
@@ -123,7 +137,10 @@ class OCRLine < OCRElement
         "#{self.class} #{coordinates_to_s} ->[\n" + 
         words.map {|w| w.to_s}.join("\n") +
         "]"
-        
+    end
+    
+    def to_text
+        words.map { |w| w.text }.join(" ")
     end
     
 end

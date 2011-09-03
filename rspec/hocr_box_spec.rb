@@ -27,8 +27,8 @@ describe HOCRBox do
         it "prints css style used as part in css for positioning element" do
             @box.to_css_style.should == "position:absolute; top:2px; left:1px; height:6px; width:19px;"
         end
-        it "has a to html_method" do
-            @box.to_html('test_class').should == "<span style='position:absolute; top:2px; left:1px; height:6px; width:19px;' class='test_class'></span>"
+        it "has a to #to_image_html method" do
+            @box.to_image_html('test_class').should == "<span style='position:absolute; top:2px; left:1px; height:6px; width:19px;' class='test_class'></span>"
         end
     end
     

@@ -33,8 +33,12 @@ describe OCRElement do
       it 'should have children' do
            @ocr_element.children.length == 2
       end
-      it 'should have labels'
-      it 'should have empty labels on constructio'
+      it 'should have features' do
+          @ocr_element.respond_to?(:features).should be_true
+      end
+      it 'should have empty features on construction' do
+        @ocr_element.features.should == []
+      end
   end
   
   
@@ -53,14 +57,29 @@ describe OCRElement do
   end
   
   describe 'html_methods' do
-      it 'should have a #to_html method' do
-        @ocr_element.to_html.should == "<span style='position:absolute; top:109px; left:79px; height:80px; width:1040px;' class='ocr_par'></span>"
+      it 'should have a #to_image_html method' do
+        @ocr_element.to_image_html.should == "<span class='ocr_par' style='position:absolute; top:109px; left:79px; height:80px; width:1040px;' > <span class='ocr_line' style='position:absolute; top:109px; left:79px; height:36px; width:1040px;' > <span class='ocrx_word' style='position:absolute; top:109px; left:79px; height:35px; width:215px;'>Athenobius,</span><span class='ocrx_word' style='position:absolute; top:112px; left:334px; height:27px; width:64px;'>Der</span><span class='ocrx_word' style='position:absolute; top:115px; left:417px; height:24px; width:59px;'>von</span><span class='ocrx_word' style='position:absolute; top:112px; left:494px; height:27px; width:51px;'>der</span><span class='ocrx_word' style='position:absolute; top:112px; left:565px; height:28px; width:122px;'>Göttin</span><span class='ocrx_word' style='position:absolute; top:112px; left:707px; height:28px; width:150px;'>Minerva</span><span class='ocrx_word' style='position:absolute; top:112px; left:876px; height:33px; width:78px;'>lebt,</span><span class='ocrx_word' style='position:absolute; top:112px; left:974px; height:28px; width:69px;'>oder:</span><span class='ocrx_word' style='position:absolute; top:112px; left:1062px; height:28px; width:57px;'>Mi»</span> </span><span class='ocr_line' style='position:absolute; top:155px; left:108px; height:34px; width:192px;' > <span class='ocrx_word' style='position:absolute; top:159px; left:108px; height:23px; width:75px;'>nerva</span><span class='ocrx_word' style='position:absolute; top:155px; left:201px; height:34px; width:99px;'>Bogen.</span> </span> </span>"
       end
+      it 'should have a #to_html method' do
+        @ocr_element.to_html.should == "<span class='ocr_par'> <span class='ocr_line'> <span class='ocrx_word'>Athenobius,</span><span class='ocrx_word'>Der</span><span class='ocrx_word'>von</span><span class='ocrx_word'>der</span><span class='ocrx_word'>Göttin</span><span class='ocrx_word'>Minerva</span><span class='ocrx_word'>lebt,</span><span class='ocrx_word'>oder:</span><span class='ocrx_word'>Mi»</span> </span><span class='ocr_line'> <span class='ocrx_word'>nerva</span><span class='ocrx_word'>Bogen.</span> </span> </span>"
+      end
+  end
+  
+  describe 'ocr_line' do
+    it 'should have a #to_text method' do
+         @ocr_element.lines[0].to_text.should == "Athenobius, Der von der Göttin Minerva lebt, oder: Mi»"
+    end
   end
   
   describe 'ocr_word' do
       it 'ocr_elements of class ocr_word should have a #text method' do
          @ocr_element.lines[0].words[5].text.should == "Minerva"
+      end
+      it 'special #to_image_html method' do
+         @ocr_element.lines[0].words[5].to_image_html.should == "<span class='ocrx_word' style='position:absolute; top:112px; left:707px; height:28px; width:150px;'>Minerva</span>"
+      end
+      it 'special #to_html method' do
+         @ocr_element.lines[0].words[5].to_html.should == "<span class='ocrx_word'>Minerva</span>"
       end
   end
   

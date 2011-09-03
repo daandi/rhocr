@@ -5,18 +5,19 @@ require 'pp'
 
 class OCRPage < OCRElement
     
-    attr_accessor :meta_data, :page_number, :dimensions, :lines
+    attr_reader :meta_data, :page_number, :dimensions, :lines, :image
     alias :each_block :each
     alias :blocks :children
     
-    def initialize(filename)
-        doc = process_hocr_html_file(filename)
+    def initialize(file_path , image_path = nil )
+        doc = process_hocr_html_file(file_path)
         page_content = doc.at_css("div.ocr_page")
         coordinates, @page_number = extract_bbox_ppageno( page_content['title'] )
         
         @page_content  = doc.at_css("div.ocr_page")
         children = OCRElement.extract_children(@page_content)
         super('ocr_page', children, coordinates)
+        @image = image_path
         
     end
     
@@ -73,9 +74,15 @@ class OCRPage < OCRElement
         html_string = File.open(filename,"r").read
         Nokogiri::HTML(html_string).elements
     end
+        
+    def to_text
+        lines.map {|line| line.to_text}.join("\n")
+    end
     
+    def to_html
+    end
     
-    def enclosed_words(box)
+    def to_image_html
     end
     
 end
