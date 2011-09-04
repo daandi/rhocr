@@ -94,7 +94,7 @@ class OCRElement < HOCRBox
     
     def to_image_html(dipslay_class = @ocr_class)
         children_html = @children.map {|c| c.to_image_html}.join("")
-        "<span class='#{ dipslay_class }' style='#{ to_css_style }' > #{ children_html } </span>"
+        "<span class='#{ dipslay_class }' style='#{ to_css_style }' ></span>#{ children_html }"
     end
     
     def to_html( display_class = @ocr_class, style = nil )
