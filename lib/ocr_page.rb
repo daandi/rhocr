@@ -79,10 +79,9 @@ class OCRPage < OCRElement
         lines.map {|line| line.to_text}.join("\n")
     end
     
-    def to_html
-    end
-    
-    def to_image_html
+    def to_image_html(dipslay_class = @ocr_class)
+        children_html = @children.map {|c| c.to_image_html}.join("")
+        "<div class='#{ dipslay_class }' style='#{ to_css_style };background-image: url(#{@image}); width:#{@width}px; height:#{@height}>px ;'>#{children_html}</div>"
     end
     
 end
