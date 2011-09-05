@@ -24,10 +24,22 @@ class OCRDocument
         @pages[number]
     end
     
-    def lines
+    def each_line
+        for page in @pages.values do
+            for line in page.lines do
+                yield line
+            end
+        end
     end
     
-    def words
+    def each_word
+        for page in @pages.values do
+            page.each_line do |line|
+                line.each do |word|
+                    yield word
+                end
+            end
+        end
     end
     
     

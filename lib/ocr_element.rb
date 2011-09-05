@@ -84,6 +84,7 @@ class OCRElement < HOCRBox
         end
     end
     
+    
     def to_s
         "#{self.class}:#{@features}#{ coordinates_to_s }->\n" + children.map { |c| "\t#{c.to_s}" }.join("\n")
     end

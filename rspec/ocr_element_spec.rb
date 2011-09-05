@@ -41,7 +41,6 @@ describe OCRElement do
       end
   end
   
-  
   describe '#ocr_classes' do
       it 'ocr_elements of class ocr_block should have an alias for children called #paragraphs' do
         OCRBlock.new('test', [], %w{10, 11, 20, 21}).respond_to?(:paragraphs).should be_true
@@ -55,6 +54,7 @@ describe OCRElement do
         @ocr_element.lines[0].respond_to?(:words).should be_true
       end
   end
+  
   
   describe 'html_methods' do
       it 'should have a #to_image_html method' do
