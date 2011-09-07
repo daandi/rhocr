@@ -8,67 +8,61 @@ class OCRElement < HOCRBox
     attr_reader :ocr_class, :children
     attr_accessor :features
     
-    def self.create_from_html(ocr_element_html)
-        create(ocr_element_html)
-    end
-    
-    def self.create(ocr_element_html)
-        ocr_class = extract_ocr_class(ocr_element_html)
-        coordinates = extract_coordinates(ocr_element_html)
-        
-        unless ocr_class == 'ocrx_word'
-            children = extract_children(ocr_element_html)
-        else
-            children = extract_word_children(ocr_element_html)
+    class << self
+        def create_from_html(ocr_element_html)
+            create(ocr_element_html)
         end
-        
-        case ocr_class
-        when 'ocrx_block' then
-            OCRBlock.new(ocr_class,children,coordinates)
-        when 'ocr_par' then
-            OCRParagraph.new(ocr_class,children,coordinates)
-        when 'ocr_line' then
-            OCRLine.new(ocr_class,children,coordinates)
-        when 'ocrx_word' then
-            OCRWord.new(ocr_class,children,coordinates)
-        else
-            OCRElement.new(ocr_class,children,coordinates)
+
+        def create(ocr_element_html)
+            ocr_class = extract_ocr_class(ocr_element_html)
+            coordinates = extract_coordinates(ocr_element_html)
+
+            unless ocr_class == 'ocrx_word'
+               children = extract_children(ocr_element_html)
+            else
+               children = extract_word_children(ocr_element_html)
+            end
+
+            case ocr_class
+            when 'ocrx_block' then
+               OCRBlock.new(ocr_class,children,coordinates)
+            when 'ocr_par' then
+               OCRParagraph.new(ocr_class,children,coordinates)
+            when 'ocr_line' then
+               OCRLine.new(ocr_class,children,coordinates)
+            when 'ocrx_word' then
+               OCRWord.new(ocr_class,children,coordinates)
+            else
+               OCRElement.new(ocr_class,children,coordinates)
+            end
         end
-    end
-    
-    def self.extract_coordinates(ocr_element_html)
-        extract_coordinates_from_string ocr_element_html['title']
-    end
-    
-    def self.extract_coordinates_from_string(s)
-        s =~ /bbox (\d+) (\d+) (\d+) (\d+)/
-        [$1, $2, $3, $4]
-    end
-    
-    def extract_coordinates_from_string(s)
-         s =~ /bbox (\d+) (\d+) (\d+) (\d+)/
-         [$1, $2, $3, $4]
-    end
-    
-    def self.extract_ocr_class(ocr_element_html)
-        ocr_element_html['class']
-    end
-    
-    def self.extract_children(ocr_element_html)
-        children = []
-        for child_fragment_html in ocr_element_html.elements do
-                children << OCRElement.create(child_fragment_html)
+
+        def extract_word_children(ocr_element_html)
+            [ocr_element_html.text]
         end
-        #br Elemente ausfiltern
-        children.reject { |child| child.ocr_class == nil}
-    end
-    
-    def extract_children(ocr_element_html)
-        self.extract_children(ocr_element_html)
-    end
-    
-    def self.extract_word_children(ocr_element_html)
-        [ocr_element_html.text]
+
+        def extract_children(ocr_element_html)
+               children = []
+               for child_fragment_html in ocr_element_html.elements do
+                       children << OCRElement.create(child_fragment_html)
+               end
+               #br Elemente ausfiltern
+               children.reject { |child| child.ocr_class == nil}
+        end
+   
+
+        def extract_coordinates(ocr_element_html)
+           extract_coordinates_from_string ocr_element_html['title']
+        end
+
+        def extract_coordinates_from_string(s)
+           s =~ /bbox (\d+) (\d+) (\d+) (\d+)/
+           [$1, $2, $3, $4]
+        end
+
+        def extract_ocr_class(ocr_element_html)
+           ocr_element_html['class']
+        end
     end
     
     def initialize(ocr_class, children, coordinates)
