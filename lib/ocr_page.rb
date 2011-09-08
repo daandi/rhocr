@@ -85,4 +85,14 @@ class OCRPage < OCRElement
         "<div class='#{ dipslay_class }' style='#{ to_css_style };background-image: url(#{@image}); width:#{@width}px; height:#{@height}>px ;'>#{children_html}</div>"
     end
     
+    def enclosed_words(ocr_box)
+        a = []
+        each_word do |w|
+            if w.enclosed_by? ocr_box then
+                a << w
+            end
+        end
+        a
+    end
+    
 end

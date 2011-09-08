@@ -1,7 +1,7 @@
 #coding: utf-8
 require 'sinatra'
 
-require_relative '../lib/ocr_page'
+require_relative '../lib/rhocr'
 
 get '/' do
     "<a href='OCRTest.html'>OCRTest</a>"
@@ -25,5 +25,5 @@ end
 
 def get_enclosed_words(x1, y1, x2 ,y2, page)
     @page = OCRPage.new("../data/#{page}")
-    @page.enclosed_words( OCRBox.new(x1, y1, x2 ,y2) )
+    @page.enclosed_words( HOCRBox.new(x1, y1, x2 ,y2) )
 end

@@ -98,5 +98,15 @@ describe OCRPage do
     end
   end
   
+  describe 'convinience methods for example' do
+    before(:each) do
+      @output_page ||= OCRPage.new 'data/test.html', 'data/test.png'
+    end  
+    
+    it 'should be abble to find words enclosed by an ocr_box' do
+        words = @output_page.enclosed_words( HOCRBox.new 0,0, 300,300 )
+        words.length.should == 6
+    end
+  end
 
 end
