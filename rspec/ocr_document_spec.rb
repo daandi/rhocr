@@ -11,13 +11,13 @@ describe OCRDocument do
     
     it 'should be possible to add a file' do
         d = OCRDocument.new
-        d.add_page 'data/bsb_test.html'
+        d.add_page 'data/test.html'
     end
     
     it 'adding a file should raise page_count' do
         d = OCRDocument.new
         old_page_count = d.page_count
-        d.add_page 'data/bsb_test.html'
+        d.add_page 'data/test.html'
         
         d.page_count.should == old_page_count + 1
     end
@@ -26,13 +26,13 @@ describe OCRDocument do
         
         before(:each) do
             @test_document = OCRDocument.new
-            @test_document.add_page 'data/bsb_test.html'
-            @test_document.add_page 'data/Seite_Tagebuch_H_C_Lang_08.html'
             @test_document.add_page 'data/test.html'
+            @test_document.add_page 'data/Seite_Tagebuch_H_C_Lang_08.html'
+            @test_document.add_page 'data/Seite_Die_Gartenlaube_242.html'
         end
         
         it 'should have #pages' do
-            @test_document.pages.keys.sort.should == [20, 33, 105]
+            @test_document.pages.keys.sort.should == [20, 33, 242]
         end
         
         it 'should retrieve page by pagenumber' do
@@ -54,9 +54,9 @@ describe OCRDocument do
         
         before(:each) do
             @test_document = OCRDocument.new
-            @test_document.add_page 'data/bsb_test.html'
-            @test_document.add_page 'data/Seite_Tagebuch_H_C_Lang_08.html'
             @test_document.add_page 'data/test.html'
+            @test_document.add_page 'data/Seite_Tagebuch_H_C_Lang_08.html'
+            @test_document.add_page 'data/Seite_Die_Gartenlaube_242.html'
         end
         
         it ' should have a method to iterate over document lines #each_line' do
@@ -64,7 +64,7 @@ describe OCRDocument do
             @test_document.each_line do |line|
                 a << line
             end
-            a.size.should == 129
+            a.size.should == 237
         end
         
         it ' should have a method to iterate over document words #each_word' do
@@ -72,7 +72,7 @@ describe OCRDocument do
             @test_document.each_word do |word|
                 a << word
             end
-            a.size.should == 1120
+            a.size.should == 2071
         end
         
     end

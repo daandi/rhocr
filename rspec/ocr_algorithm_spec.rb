@@ -7,7 +7,7 @@ require 'pp'
 describe OCRAlgorithm do
     
     before(:each) do
-        @test_page ||= OCRPage.new 'data/bsb_test.html'
+        @test_page ||= OCRPage.new 'data/test.html'
     end
     
     it 'should be implemented'

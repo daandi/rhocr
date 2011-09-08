@@ -18,13 +18,17 @@ describe RHOCR do
     
     describe 'methods to iterate' do
         it 'should have lines' do
-            @rhocr_doc.lines.length.should == 129
+            @rhocr_doc.lines.length.should == 237
         end
         
         it 'should have words' do
-            @rhocr_doc.words.length.should == 1120
+            @rhocr_doc.words.length.should == 2071
+        end
+        
+        it 'should support common iterator methods throug enumerable for word an line arrays' do
+            @rhocr_doc.words.respond_to?(:each_cons).should be_true
+            @rhocr_doc.lines.respond_to?(:map).should be_true
         end
     end
-    
     
 end
