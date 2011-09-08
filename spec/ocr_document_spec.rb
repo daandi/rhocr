@@ -76,9 +76,5 @@ describe OCRDocument do
         end
         
     end
-    
-    
-    it 'should be able to use ocr_algorithms on pages'
-    
-  
+
 end

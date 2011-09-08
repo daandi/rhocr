@@ -20,7 +20,11 @@ describe OCRPage do
         dimensions.should == %w{ 0 0 1326 1326}
     end
     
-    it 'should have an image attached'
+    it 'may have an image attached, if no image supplied #image is nil' do
+        @test_page.image.should be_nil
+        t = OCRPage.new('data/Seite_Tagebuch_H_C_Lang_08.html','Ponies.png')
+        t.image.should == 'Ponies.png'
+    end
   end
   
   describe 'Page' do
