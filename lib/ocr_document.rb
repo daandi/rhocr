@@ -3,10 +3,11 @@
 require_relative 'ocr_page'
 
 class OCRDocument
-    attr_reader :pages
+    attr_reader :pages, :page_count
     
     def initialize
         @pages = Hash.new()
+        @page_count = 0
     end
     
     def add_pages( list_o_pages  )
@@ -18,6 +19,7 @@ class OCRDocument
     def add_page( file )
         page = OCRPage.new( file )
         @pages[page.page_number] = page
+        @page_count += 1
     end
     
     def page( number )
@@ -26,7 +28,7 @@ class OCRDocument
     
     def each_line
         for page in @pages.values do
-            for line in page.lines do
+            page.each_line do |line|
                 yield line
             end
         end
@@ -43,4 +45,6 @@ class OCRDocument
     end
     
     
+    alias :add_files :add_pages
+    alias :add_file :add_page
 end

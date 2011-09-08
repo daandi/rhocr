@@ -4,13 +4,22 @@ require_relative '../lib/ocr_document'
 
 describe OCRDocument do
     
-    it 'construcructor should work' do
-        OCRDocument.new.should_not be_nil
+    it 'construcructor should create an empty document with page_count 0' do
+        d = OCRDocument.new
+        d.page_count.should == 0
     end
     
     it 'should be possible to add a file' do
         d = OCRDocument.new
         d.add_page 'data/bsb_test.html'
+    end
+    
+    it 'adding a file should raise page_count' do
+        d = OCRDocument.new
+        old_page_count = d.page_count
+        d.add_page 'data/bsb_test.html'
+        
+        d.page_count.should == old_page_count + 1
     end
     
     describe 'methods to #add_page an access pages' do
@@ -42,15 +51,6 @@ describe OCRDocument do
     end
     
     describe 'Methods to iterate over words and lines' do
-        
-        it 'should create ocr_pages given a list of filenames #add_pages' do
-            @ocrDoc = OCRDocument.new
-            example_folder = Dir["data/bsb10413454/hocr/*.html"]
-            start = Time.now()
-            @ocrDoc.add_pages example_folder
-            puts "It took #{ (Time.now - start).to_i } seconds to process #{example_folder.length} pages"
-            @ocrDoc.pages.length.should == example_folder.length
-        end
         
         before(:each) do
             @test_document = OCRDocument.new

@@ -10,11 +10,11 @@ class OCRElement < HOCRBox
     
     class << self
         def create_from_html(ocr_element_html)
-            create(ocr_element_html)
+            create ocr_element_html
         end
 
         def create(ocr_element_html)
-            ocr_class = extract_ocr_class(ocr_element_html)
+            ocr_class   = extract_ocr_class(ocr_element_html)
             coordinates = extract_coordinates(ocr_element_html)
 
             unless ocr_class == 'ocrx_word'
@@ -78,7 +78,6 @@ class OCRElement < HOCRBox
         end
     end
     
-    
     def to_s
         "#{self.class}:#{@features}#{ coordinates_to_s }->\n" + children.map { |c| "\t#{c.to_s}" }.join("\n")
     end
@@ -120,7 +119,6 @@ class OCRWord < OCRElement
 end
 
 class OCRLine < OCRElement
-    alias :words :children
     
     def to_s
         "#{self.class} #{coordinates_to_s} ->[\n" + 
@@ -138,6 +136,7 @@ class OCRLine < OCRElement
         words.map { |w| w.text }.join(" ")
     end
     
+    alias :words :children
 end
 
 class OCRParagraph < OCRElement

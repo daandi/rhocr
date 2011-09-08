@@ -6,7 +6,7 @@ require 'pp'
 describe OCRPage do
   
   before(:each) do
-      @test_page ||= OCRPage.new('data/bsb_test.html')
+      @test_page ||= OCRPage.new('data/Seite_Tagebuch_H_C_Lang_08.html')
   end
   
   describe '#constructor and mehtods for construction' do
@@ -26,13 +26,13 @@ describe OCRPage do
   describe 'Page' do
       it 'should have a #page_number' do
           @test_page.page_number.should_not be_nil
-          @test_page.page_number.should == 33
+          @test_page.page_number.should == 20
       end
       
       it 'should have metedata'
       
       it 'page should have #coordinates' do
-          @test_page.coordinates.should == [0,0,1326,1326]
+          @test_page.coordinates.should == [0, 0, 1709, 1709]
       end
       it 'should have children' do
         @test_page.children.should_not == []
@@ -53,28 +53,28 @@ describe OCRPage do
           @test_page.each_paragraph do |paragraph|
               a << paragraph
           end
-          a.length.should == 28
+          a.length.should == 12
       end
       it 'should have a line iterator #each_line' do
           a = []
           @test_page.each_line do |line|
                 a << line
             end
-          a.length.should == 43
+          a.length.should == 45
       end
       it 'should have a word iterator #each_word' do
         a = []
         @test_page.each_word do |word|
             a << word
         end
-        a.length.should == 346
+        a.length.should == 415
       end
     
   end
   
   describe 'convinience methods' do
       it 'should have a method #lines' do
-        @test_page.lines[5].children.length.should == 9
+        @test_page.lines[5].children.length.should == 11
       end
   end
   

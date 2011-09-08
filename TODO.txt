@@ -16,7 +16,7 @@
 	* Testdaten, Stabi liefert schlecht Grafiken
 	* Geschwindigkeit
 	* Algorithmen, wie integrieren? Sollte modular sein
-	* Feste Ordnung wird zur Zeit voraussgesetztz
+	* Feste Ordnung wird zur Zeit voraussgesetz
 
 4. Bisheriges Vorgehen
 	=> HOCR einlesen, parsen
@@ -37,6 +37,6 @@
 6. 	Idee: 
 		=> Nutzer wählt Bereiche in GUI aus und benennt sie.
 		=> Features der gewählten Bereiche werden ermittelt.
-		=> Anhand der Features werdenaus dem gesamten Dokument die logischen Strukturen extrahiert
+		=> Anhand der Features werden aus dem gesamten Dokument die logischen Strukturen extrahiert
 		=> Feedbackschleife in GUI mit 
 			Grafik+Marker|Text als HTML mit Marker|

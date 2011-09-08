@@ -52,6 +52,7 @@ class OCRPage < OCRElement
         end
     end
     
+    #deprecated
     def lines
         unless @lines then
             @lines = []
@@ -67,7 +68,7 @@ class OCRPage < OCRElement
     def extract_bbox_ppageno( ocr_html_text_fragment )
         bbox, ppageno = ocr_html_text_fragment.split(';')
         ppageno =~ /(\d+)/
-        [ extract_coordinates_from_string(bbox) , $1.to_i ]
+        [ OCRElement.extract_coordinates_from_string(bbox) , $1.to_i ]
     end
     
     def process_hocr_html_file(filename)

@@ -4,6 +4,9 @@ require 'ai4r'
 
 module OCRAlgorithm
     
+    class OCRLine
+    end
+    
     def OCRAlgorithm.word_distances_for_line(ocr_line)
         distances = []
         ocr_line.each_cons(2) do |w1,w2|
