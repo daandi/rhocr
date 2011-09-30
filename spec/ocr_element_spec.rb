@@ -81,6 +81,11 @@ describe OCRElement do
       it 'special #to_html method' do
          @ocr_element.lines[0].words[5].to_html.should == "<span class='ocrx_word'>Minerva</span>"
       end
+      it 'special #to_s method' do
+         @ocr_element.lines[0].words[5].to_s.should == "Minerva:[707, 112, 857, 140]->[]"
+         @ocr_element.lines[0].words[5].features << :a_test << :additional
+         @ocr_element.lines[0].words[5].to_s.should == "Minerva:[707, 112, 857, 140]->[:a_test, :additional]"
+      end
   end
   
  end

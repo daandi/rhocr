@@ -105,7 +105,7 @@ class OCRWord < OCRElement
     end
     
     def to_s
-        "#{text}[#{@features}]"
+        "#{text}:#{coordinates}->#{@features}"
     end
     
     def to_image_html
