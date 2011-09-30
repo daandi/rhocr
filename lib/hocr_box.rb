@@ -46,6 +46,14 @@ class HOCRBox
         other.left_distance_to(self)
     end
     
+    def top_distance_to(other)
+        @top - other.bottom
+    end
+    
+    def bottom_distance_to(other)
+        other.top_distance_to(self)
+    end
+    
     def to_s
         coordinates_to_s
     end

@@ -90,5 +90,17 @@ describe HOCRBox do
         end
     end
     
+    describe '#top_distance_to(element)' do
+        it 'box should be 2px below of element' do
+             @box.top_distance_to(HOCRBox.new(22,0,24,0)).should == 2
+        end
+    end
+    
+    describe '#bottom_distance_to(element)' do
+        it 'box should be 2px above of element' do
+             @box.bottom_distance_to(HOCRBox.new(1,10,20,12)).should == 2
+        end
+    end
+    
     
 end
