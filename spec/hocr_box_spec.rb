@@ -12,6 +12,24 @@ describe HOCRBox do
         it 'should have coordinates' do
             @box.coordinates.should == [1,2,20,8]
         end
+        it 'should have #left' do
+            @box.left.should == 1
+        end
+        it 'should have #right' do
+            @box.right.should == 20
+        end
+        it 'should have #top' do
+            @box.top.should == 2
+        end
+        it 'should have #bottom' do
+            @box.bottom.should == 8
+        end
+        it 'should have height' do
+            @box.height == 7
+        end
+        it 'should have width' do
+            @box.width.should == 19
+        end
     end
     
     describe "#to_s" do
@@ -91,7 +109,7 @@ describe HOCRBox do
     end
     
     describe '#top_distance_to(element)' do
-        it 'box should be 2px below of element' do
+        it 'box should be 9px below of element' do
              HOCRBox.new(109,241,206,274).top_distance_to(HOCRBox.new(160,196,1117,232)).should == 9
         end
     end

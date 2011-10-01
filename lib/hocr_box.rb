@@ -2,15 +2,13 @@
 
 class HOCRBox
     
-    attr_reader :left, :top, :right, :bottom, :upper_left, :lower_right, :coordinates
+    attr_reader :left, :top, :right, :width, :height, :bottom, :coordinates
     def initialize(* coordinates)
         
         @left, @top, @right, @bottom = coordinates.flatten.collect { |x| x.to_i}
         
         @height  = @bottom - @top
         @width   = @right - @left
-        @upper_left = [ @left, @top]
-        @lower_rigth = [ @right, @bottom ]
         @coordinates = [ @left, @top,@right, @bottom ]
         
         if left > right || top > bottom then
