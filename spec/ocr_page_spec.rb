@@ -46,41 +46,24 @@ describe OCRPage do
   
   describe '#Iterators' do
       it 'should have a block iterator #each_block' do
-          a = []
-          @test_page.each_block do |block|
-             a << block
-          end
-          a.length.should == 1
+          Enumerator.new(@test_page,:each_block).
+          inject([]) {|acc,elem| acc << elem}.length.should == 1
       end
       it 'should have a paragraph iterator #each_paragraph' do
-          a = []
-          @test_page.each_paragraph do |paragraph|
-              a << paragraph
-          end
-          a.length.should == 12
+          Enumerator.new(@test_page,:each_paragraph).
+          inject([]) {|acc,elem| acc << elem}.length.should == 12
       end
       it 'should have a line iterator #each_line' do
-          a = []
-          @test_page.each_line do |line|
-                a << line
-            end
-          a.length.should == 45
+          Enumerator.new(@test_page,:each_line).
+          inject([]) {|acc,elem| acc << elem}.length.should == 45
       end
       it 'should have a word iterator #each_word' do
-        a = []
-        @test_page.each_word do |word|
-            a << word
-        end
-        a.length.should == 415
+            Enumerator.new(@test_page,:each_word).
+            inject([]) {|acc,elem| acc << elem}.length.should == 415
       end
     
   end
   
-  describe 'convinience methods' do
-      it 'should have a method #lines' do
-        @test_page.lines[5].children.length.should == 11
-      end
-  end
   
   describe ' display methods' do
     
@@ -111,6 +94,8 @@ describe OCRPage do
         words = @output_page.enclosed_words( HOCRBox.new 0,0, 300,300 )
         words.length.should == 6
     end
+    
+    it 'should have an #enclosed_word method to iterate over ewords enclosed by given box'
   end
 
 end

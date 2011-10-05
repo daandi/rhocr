@@ -13,16 +13,17 @@ describe RHOCR do
     end
     
     before(:each) do
-        @rhocr_doc ||= RHOCR.new.add_folder "data/*.html"
+        @rhocr_doc ||= RHOCR.new
+        @rhocr_doc.add_folder "data/*.html"
     end
     
     describe 'methods to iterate' do
         it 'should have lines' do
-            @rhocr_doc.lines.length.should == 237
+            @rhocr_doc.lines.inject([]){|acc,l| acc <<l}.length.should == 237
         end
         
         it 'should have words' do
-            @rhocr_doc.words.length.should == 2071
+            @rhocr_doc.words.inject([]){|acc,w| acc <<w}.length.should == 2071
         end
         
         it 'should support common iterator methods throug enumerable for word an line arrays' do

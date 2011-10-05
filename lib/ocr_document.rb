@@ -11,7 +11,8 @@ class OCRDocument
     end
     
     def add_pages( list_o_pages  )
-        for file in list_o_pages do
+        raise "no files given" if list_o_pages.empty?
+        list_o_pages.each do |file|
             add_page(file)
         end
     end

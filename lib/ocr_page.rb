@@ -52,18 +52,6 @@ class OCRPage < OCRElement
         end
     end
     
-    #deprecated
-    def lines
-        unless @lines then
-            @lines = []
-            
-            each_line do |line|
-                @lines << line
-            end
-            
-        end
-        @lines
-    end
     
     def extract_bbox_ppageno( ocr_html_text_fragment )
         bbox, ppageno = ocr_html_text_fragment.split(';')
@@ -77,7 +65,7 @@ class OCRPage < OCRElement
     end
         
     def to_text
-        lines.map {|line| line.to_text}.join("\n")
+        Enumerator.new(self,:each_line).map {|line| line.to_text}.join("\n")
     end
     
     def to_image_html(dipslay_class = @ocr_class)
@@ -86,13 +74,16 @@ class OCRPage < OCRElement
     end
     
     def enclosed_words(ocr_box)
-        a = []
+        enum = Enumerator.new(self,:each_enclosed_word,ocr_box)
+        enum.inject([]) { |acc,w| acc << w}
+    end
+    
+    def each_enclosed_word(ocr_box)
         each_word do |w|
             if w.enclosed_by? ocr_box then
-                a << w
+                yield w
             end
         end
-        a
     end
     
 end
