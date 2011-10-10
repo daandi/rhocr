@@ -16,7 +16,7 @@ describe OCRElement do
   describe '#initialize and Object' do
       it 'should create an element given ocr_class, children and coordiantes' do
           test_element = OCRElement.new('test', [], %w{10, 11, 20, 21})
-          test_element.children.should == []
+          test_element.children.should be_empty
           test_element.coordinates.should == [10,11,20,21]
           test_element.ocr_class.should == 'test'
       end
@@ -63,6 +63,29 @@ describe OCRElement do
       it 'should have a #to_html method' do
         @ocr_element.to_html.should == "<span class='ocr_par'> <span class='ocr_line'> <span class='ocrx_word'>Athenobius,</span><span class='ocrx_word'>Der</span><span class='ocrx_word'>von</span><span class='ocrx_word'>der</span><span class='ocrx_word'>Göttin</span><span class='ocrx_word'>Minerva</span><span class='ocrx_word'>lebt,</span><span class='ocrx_word'>oder:</span><span class='ocrx_word'>Mi»</span> </span><span class='ocr_line'> <span class='ocrx_word'>nerva</span><span class='ocrx_word'>Bogen.</span> </span> </span>"
       end
+  
+      it 'should add features to css class' do
+         @ocr_element.lines[0].words[5].features << :test
+         @ocr_element.lines[0].words[5].to_html.should == "<span class='ocrx_word-test'>Minerva</span>"
+      end
+      
+      it 'should transform features to an css class #features_to_css_class' do
+        test_elem = @ocr_element.lines[0]
+        test_elem.features_to_css_class.should == ''
+        test_elem.features << :test 
+        test_elem.features << :stuff
+        test_elem.features_to_css_class.should == 'stuff_test'
+        test_elem.features << :test 
+        test_elem.features_to_css_class.should == 'stuff_test'
+      end
+      
+      it 'should use plain css class if elemetn has no features #css_class_string' do
+        test = @ocr_element.lines[1]
+        test.css_class_string.should == 'ocr_line'
+        test.features << :abc
+        test.css_class_string.should == 'ocr_line-abc'
+      end
+
   end
   
   describe 'ocr_line' do

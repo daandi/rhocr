@@ -86,14 +86,26 @@ class OCRElement < HOCRBox
         "<span style='color: #{color}'>#{to_s}</span>"
     end
     
-    def to_image_html(dipslay_class = @ocr_class)
+    def css_class_string
+        if @features.empty?
+            "#{@ocr_class}"
+        else
+            "#{@ocr_class}-#{features_to_css_class}"
+        end
+    end
+    
+    def to_image_html(dipslay_class =css_class_string)
         children_html = @children.map {|c| c.to_image_html}.join("")
         "<span class='#{ dipslay_class }' style='#{ to_css_style }' ></span>#{ children_html }"
     end
     
-    def to_html( display_class = @ocr_class, style = nil )
+    def to_html( display_class = css_class_string, style = nil )
          children_html = @children.map {|c| c.to_html}.join("")
         "<span class='#{ display_class }'> #{ children_html } </span>"
+    end
+    
+    def features_to_css_class
+        @features.uniq.sort.join('_')
     end
     
 end
@@ -109,11 +121,11 @@ class OCRWord < OCRElement
     end
     
     def to_image_html
-        "<span class='#{ @ocr_class }' style='#{ to_css_style }'>#{ text }</span>"
+        "<span class='#{ css_class_string}' style='#{ to_css_style }'>#{ text }</span>"
     end
     
     def to_html
-        "<span class='#{ @ocr_class }'>#{ text }</span>"
+        "<span class='#{ css_class_string }'>#{ text }</span>"
     end
     
 end
