@@ -22,6 +22,7 @@ describe OCRDocument do
         d.page_count.should == old_page_count + 1
     end
     
+    
     describe 'methods to #add_page an access pages' do
         
         before(:each) do
@@ -48,9 +49,14 @@ describe OCRDocument do
             @test_document.page(105).should == @test_document.pages[105]
         end
         
+        it 'has a method to add an image to a file #add_image_to_page' do
+            @test_document.add_image_to_page(20,"path")
+            @test_document.page(20).image.should == "path"
+        end
+        
     end
     
-    describe 'Methods to iterate over words and lines' do
+    describe 'Methods to iterate over words, lines and pages' do
         
         before(:each) do
             @test_document = OCRDocument.new
@@ -73,6 +79,14 @@ describe OCRDocument do
                 a << word
             end
             a.size.should == 2071
+        end
+        
+        it ' should have a method to iterate pages #each_page' do
+            start_number = 0
+            @test_document.each_page do |page|
+                page.page_number.should > start_number
+                start_number = page.page_number
+            end
         end
         
     end

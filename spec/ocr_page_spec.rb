@@ -25,6 +25,13 @@ describe OCRPage do
         t = OCRPage.new('data/Seite_Tagebuch_H_C_Lang_08.html','Ponies.png')
         t.image.should == 'Ponies.png'
     end
+    
+    it 'can change the image by an accessor' do
+        old_image = @test_page.image
+        @test_page.image = "test_path"
+        @test_page.image.should == "test_path"
+        @test_page.image = old_image
+    end
   end
   
   describe 'Page' do

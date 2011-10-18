@@ -5,7 +5,8 @@ require 'pp'
 
 class OCRPage < OCRElement
     
-    attr_reader :meta_data, :page_number, :dimensions, :lines, :image
+    attr_reader :meta_data, :page_number, :dimensions, :lines
+    attr_accessor :image
     alias :each_block :each
     alias :blocks :children
     

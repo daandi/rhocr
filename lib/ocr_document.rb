@@ -23,8 +23,19 @@ class OCRDocument
         @page_count += 1
     end
     
+    def add_image_to_page(page_number, image_path)
+        @pages[page_number].image = image_path
+    end
+    
     def page( number )
         @pages[number]
+    end
+    
+    def each_page
+        sorted_pages = @pages.keys.sort
+        sorted_pages.each do |page_key|
+            yield @pages[page_key]
+        end
     end
     
     def each_line
