@@ -72,7 +72,7 @@ class OCRPage < OCRElement
         zoom = options[:zoom] || 1
         display_class = options[:css_class] || css_class_string
         children_html = @children.map {|c| c.to_image_html(:zoom => zoom) }.join("")
-        "<div class='#{ display_class }' style='height:#{@height * zoom}px; width:#{@width * zoom}px;;background-image: url(#{@image}); width:#{@width * zoom}px; height:#{@height * zoom}>px ;'>#{children_html}</div>"
+        "<div class='#{ display_class }' style='position:absoulte; left:#{@left}px; top:#{@top}px; background-image: url(#{@image}); width:#{@width * zoom}px; height:#{@height * zoom}>px;'>#{children_html}</div>"
     end
     
     def enclosed_words(ocr_box)
