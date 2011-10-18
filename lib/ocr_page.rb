@@ -19,7 +19,6 @@ class OCRPage < OCRElement
         children = OCRElement.extract_children(@page_content)
         super('ocr_page', children, coordinates)
         @image = image_path
-        
     end
     
     
@@ -69,9 +68,11 @@ class OCRPage < OCRElement
         Enumerator.new(self,:each_line).map {|line| line.to_text}.join("\n")
     end
     
-    def to_image_html(dipslay_class = @ocr_class)
-        children_html = @children.map {|c| c.to_image_html}.join("")
-        "<div class='#{ dipslay_class }' style='#{ to_css_style };background-image: url(#{@image}); width:#{@width}px; height:#{@height}>px ;'>#{children_html}</div>"
+    def to_image_html(options = {})
+        zoom = options[:zoom] || 1
+        display_class = options[:css_class] || css_class_string
+        children_html = @children.map {|c| c.to_image_html(:zoom => zoom) }.join("")
+        "<div class='#{ display_class }' style='height:#{@height * zoom}px; width:#{@width * zoom}px;;background-image: url(#{@image}); width:#{@width * zoom}px; height:#{@height * zoom}>px ;'>#{children_html}</div>"
     end
     
     def enclosed_words(ocr_box)
@@ -86,5 +87,6 @@ class OCRPage < OCRElement
             end
         end
     end
+
     
 end

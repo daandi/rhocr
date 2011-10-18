@@ -94,9 +94,11 @@ class OCRElement < HOCRBox
         end
     end
     
-    def to_image_html(dipslay_class =css_class_string)
-        children_html = @children.map {|c| c.to_image_html}.join("")
-        "<span class='#{ dipslay_class }' style='#{ to_css_style }' ></span>#{ children_html }"
+    def to_image_html(options = {})
+        zoom = options[:zoom] || 1
+        display_class = options[:css_class] || css_class_string
+        children_html = @children.map {|c| c.to_image_html(:zoom => zoom) }.join("")
+        "<span class='#{ display_class }' style='#{ to_css_style(zoom) }' ></span>#{ children_html }"
     end
     
     def to_html( display_class = css_class_string, style = nil )
@@ -120,8 +122,10 @@ class OCRWord < OCRElement
         "#{text}:#{coordinates}->#{@features}"
     end
     
-    def to_image_html
-        "<span class='#{ css_class_string}' style='#{ to_css_style }'>#{ text }</span>"
+    def to_image_html(options = {})
+        zoom = options[:zoom] || 1
+        display_class = options[:css_class] || css_class_string
+        "<span class='#{ css_class_string}' style='#{ to_css_style(zoom) }'>#{ text }</span>"
     end
     
     def to_html

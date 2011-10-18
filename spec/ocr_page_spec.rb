@@ -102,6 +102,10 @@ describe OCRPage do
         words.length.should == 6
     end
     
+    it 'has an own #to_css_style method' do
+        @output_page.to_css_style.should ==""
+    end
+    
     it 'should have an #enclosed_word method to iterate over ewords enclosed by given box'
   end
 

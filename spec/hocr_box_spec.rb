@@ -42,12 +42,13 @@ describe HOCRBox do
     end
     
     describe "HTML-Methods" do
-        it "prints css style used as part in css for positioning element" do
-            @box.to_css_style.should == "position:absolute; top:2px; left:1px; height:6px; width:19px;"
-        end
         it "has a to #to_image_html method" do
-            @box.to_image_html('test_class').should == "<span style='position:absolute; top:2px; left:1px; height:6px; width:19px;' class='test_class'></span>"
+            @box.to_image_html(:css_class =>'test_class').should == "<span style='position:absolute; top:2px; left:1px; height:6px; width:19px;' class='test_class'></span>"
         end
+        it "has an optional zoom which can be given as argument to #to_image_html" do
+            @box.to_image_html(:zoom => 0.5).should == "<span style='position:absolute; top:1.0px; left:0.5px; height:3.0px; width:9.5px;' class='hocr_box'></span>"
+        end
+        
     end
     
     describe '#encloses?(element)' do
@@ -63,6 +64,9 @@ describe HOCRBox do
     describe '#to_css_style' do
         it 'should create css-style attributes' do
             @box.to_css_style.should == 'position:absolute; top:2px; left:1px; height:6px; width:19px;'
+        end
+        it 'by giving a zoom factor css positions should be altered' do
+            @box.to_css_style(2).should == "position:absolute; top:4px; left:2px; height:12px; width:38px;"
         end
     end
     

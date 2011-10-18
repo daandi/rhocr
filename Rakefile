@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new('rhocr', '0.1.3') do |p|
+Echoe.new('rhocr', '0.1.4') do |p|
   p.description    = "Manipulate and use OCR data encoded in hOCR-Format see: http://code.google.com/p/hocr-tools/"
   p.url            = "http://github.com/daandi/rhocr"
   p.author         = "Andreas Neumann"
